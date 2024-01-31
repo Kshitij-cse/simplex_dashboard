@@ -1,0 +1,45 @@
+import streamlit as st
+import warnings
+import pandas as pd
+from auth_code import auth_code
+from today_analysis import today_analysis
+from historicaL_analysis import historical_analysis
+from utility import firebase_data_loader
+import streamlit_authenticator as stauth
+
+st.set_page_config(page_title="Simplex Dashboard", page_icon=":bar_chart:", layout="wide")
+warnings.filterwarnings('ignore')
+
+st.title(" :bar_chart: Simplex Dashboard")
+authentication_status, username, authenticator = auth_code()
+
+if authentication_status:
+    authenticator.logout("Logout", "sidebar",key=17)
+    tab_titles = ["Today Analysis", "Historical Analysis"]
+    tabs = st.tabs(tab_titles)
+    st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
+
+    #df = firebase_data_loader()
+    df = pd.read_excel('haryana7.xlsx')
+    df["District"] = df["District"].str.lower()
+    if username.lower() != "master":
+        df = df[df["District"] == username.lower()]
+
+    # Sidebar code start here
+    st.sidebar.header("Choose your filter: ")
+    district_list = st.sidebar.multiselect("Pick your District", df["District"].unique())
+    if district_list:
+        df = df[df["District"].isin(district_list)]
+
+    colony_list = st.sidebar.multiselect("Pick the Colony", df["Colony"].unique())
+    if colony_list:
+        df = df[df["Colony"].isin(colony_list)]
+
+    vendor_list = st.sidebar.multiselect("Pick the Vendor", df["Vendor"].unique())
+    if vendor_list:
+        df = df[df["Vendor"].isin(vendor_list)]
+
+    with tabs[0]:
+        today_analysis(df)
+    with tabs[1]:
+        historical_analysis(df)
