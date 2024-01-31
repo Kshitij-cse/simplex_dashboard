@@ -1,0 +1,21 @@
+credentials:
+  usernames:
+    Master:
+      name: Master
+      password: '$2b$12$tBWtXqg7DbYTWcS8zkJwnOlCj1JaZu255pzvD/lY/Z2vMTZ9ShT4S' # To be replaced with hashed password
+    ambala:
+      name: Ambala
+      password: '$2b$12$PCvOZF/ur05NRjX6TEEScuROqfLLQMzvSmFovgMUumlAq4utce/si' # To be replaced with hashed password
+    gurgaon:
+      name: Gurgaon
+      password: '$2b$12$ofc95V7Yb8kbxQFJW10SnOPhBhBS4L6b1bfZNWgN5f.lQ1wmH0o5W' # To be replaced with hashed password
+    karnal:
+      name: Karnal
+      password: '$2b$12$httfEtfTYaC2p20F3wA2XO6pK3BtB0R0JaYy8JsEnGMb.VlWvwwjO' # To be replaced with hashed password
+cookie:
+  expiry_days: 30
+  key: 'abcde@123!@' # Must be string
+  name: "Simplex Dashboard"
+preauthorized:
+  emails:
+  - sdevendersingh91@gmail.com
