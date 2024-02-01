@@ -14,26 +14,26 @@ def today_analysis(df):
     #date2 = pd.Timestamp(date2, tz="UTC")
     
     df = df[(df["Date"] >= date1) & (df["Date"] <= date2)]
-
+    df.rename(columns={'District': 'MC'}, inplace=True)
     with col1:
         st.markdown('<p style="font-size:22px; color:blue; font-weight:bold;">Today Analysis</p>',
                     unsafe_allow_html=True)
 
-    result = generate_grouped_df(df, ['District', 'Vendor'])
+    result = generate_grouped_df(df, ['MC', 'Vendor'])
     total_properties_covered = df.shape[0]
-    result1 = generate_grouped_df(df, ['District', 'Colony'])
+    result1 = generate_grouped_df(df, ['MC', 'Colony'])
     result2 = generate_grouped_df(df, ['Vendor', 'Colony'])
     result3 = generate_grouped_df(df, ['Colony', 'Vendor'])
     result4 = generate_grouped_df(df, ['Vendor', 'Phone', 'Colony'])
     result5 = generate_grouped_df(df, ['Colony'])
-
+    
     col4, col5 = st.columns((2))
     with col4:
         csv,pdf_buffer = gen_csv(result,(f" {'Total Property'} {total_properties_covered}"))
         create_download_buttons(pdf_buffer,csv,61,91)
 
     with col5:
-        csv1,pdf_buffer1 = gen_csv(result1, 'District/Colony:')
+        csv1,pdf_buffer1 = gen_csv(result1, 'MC/Colony:')
         create_download_buttons(pdf_buffer1, csv1,62,92)
 
     col6, col7 = st.columns((2))

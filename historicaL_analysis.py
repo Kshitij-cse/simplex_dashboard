@@ -6,7 +6,7 @@ from utility import df_to_pdf, generate_grouped_df, gen_csv,create_download_butt
 def historical_analysis(df):
     col1, col2, col3 = st.columns((3))
     df["Date"] = pd.to_datetime(df["Date"])
-  
+    df.rename(columns={'District': 'MC'}, inplace=True)
     # Getting the min and max date
     startDate = pd.to_datetime(df["Date"]).min()
     endDate = pd.to_datetime('today')
@@ -22,9 +22,9 @@ def historical_analysis(df):
 
     df = df[(df["Date"] >= date1) & (df["Date"] <= date2)]
 
-    result = generate_grouped_df(df, ['District', 'Vendor'])
+    result = generate_grouped_df(df, ['MC', 'Vendor'])
     total_properties_covered = df.shape[0]
-    result1 = generate_grouped_df(df, ['District', 'Colony'])
+    result1 = generate_grouped_df(df, ['MC', 'Colony'])
     result2 = generate_grouped_df(df, ['Vendor', 'Colony'])
     result3 = generate_grouped_df(df, ['Colony', 'Vendor'])
     result4 = generate_grouped_df(df, ['Vendor', 'Phone', 'Colony'])
@@ -36,7 +36,7 @@ def historical_analysis(df):
         create_download_buttons(pdf_buffer,csv,71,81)
 
     with col5:
-        csv1,pdf_buffer1 = gen_csv(result1, 'District/Colony:')
+        csv1,pdf_buffer1 = gen_csv(result1, 'MC/Colony:')
         create_download_buttons(pdf_buffer1, csv1,72,82)
 
     col6, col7 = st.columns((2))
