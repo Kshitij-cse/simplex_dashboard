@@ -4,6 +4,8 @@ import pandas as pd
 from auth_code import auth_code
 from today_analysis import today_analysis
 from historicaL_analysis import historical_analysis
+from today_analysis1 import today_analysis1
+from historical_analysis1 import historical_analysis1
 from utility import firebase_data_loader
 import streamlit_authenticator as stauth
 
@@ -27,19 +29,26 @@ if authentication_status:
 
     # Sidebar code start here
     st.sidebar.header("Choose your filter: ")
-    district_list = st.sidebar.multiselect("Pick your District", df["District"].unique())
-    if district_list:
+    if(username=="master"):
+     district_list = st.sidebar.multiselect("Pick your District", df["District"].unique())
+     if district_list:
         df = df[df["District"].isin(district_list)]
 
     colony_list = st.sidebar.multiselect("Pick the Colony", df["Colony"].unique())
     if colony_list:
         df = df[df["Colony"].isin(colony_list)]
-
-    vendor_list = st.sidebar.multiselect("Pick the Vendor", df["Vendor"].unique())
-    if vendor_list:
+    if(username=="master"):
+     vendor_list = st.sidebar.multiselect("Pick the Vendor", df["Vendor"].unique())
+     if vendor_list:
         df = df[df["Vendor"].isin(vendor_list)]
-
-    with tabs[0]:
-        today_analysis(df)
-    with tabs[1]:
-        historical_analysis(df)
+    
+    if(username=="master"):
+        with tabs[0]:
+            today_analysis(df)
+        with tabs[1]:
+            historical_analysis(df)
+    else:
+        with tabs[0]:
+            today_analysis1(df)
+        with tabs[1]:
+            historical_analysis1(df)
