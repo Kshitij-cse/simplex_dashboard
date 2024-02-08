@@ -6,6 +6,6 @@ pandas               ==      1.5.3
 pdfkit               ==      1.0.0
 plotly               ==      5.18.0
 reportlab            ==      4.0.9
-streamlit                 == 1.30.0
+streamlit                 == 1.29.0
 streamlit-authenticator   == 0.3.1
 firebase-admin           ==  6.4.0

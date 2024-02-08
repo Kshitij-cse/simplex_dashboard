@@ -8,6 +8,7 @@ from today_analysis1 import today_analysis1
 from historical_analysis1 import historical_analysis1
 from utility import firebase_data_loader
 import streamlit_authenticator as stauth
+from analytics_page import  Analytics_tab
 
 st.set_page_config(page_title="Simplex Dashboard", page_icon=":bar_chart:", layout="wide")
 warnings.filterwarnings('ignore')
@@ -17,12 +18,12 @@ authentication_status, username, authenticator = auth_code()
 
 if authentication_status:
     authenticator.logout("Logout", "sidebar",key=17)
-    tab_titles = ["Today Analysis", "Historical Analysis"]
+    tab_titles = ["Today Analysis", "Historical Analysis","Analytics"]
     tabs = st.tabs(tab_titles)
     st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
 
-    #df = firebase_data_loader()
-    df = pd.read_excel('haryana7.xlsx')
+    df = firebase_data_loader()
+    #df = pd.read_excel('haryana7.xlsx')
     df["District"] = df["District"].str.lower()
     if username.lower() != "master":
         df = df[df["District"] == username.lower()]
@@ -47,8 +48,11 @@ if authentication_status:
             today_analysis(df)
         with tabs[1]:
             historical_analysis(df)
+        with tabs[2]:
+             Analytics_tab(df)    
     else:
         with tabs[0]:
             today_analysis1(df)
         with tabs[1]:
             historical_analysis1(df)
+         

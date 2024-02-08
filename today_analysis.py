@@ -10,8 +10,8 @@ def today_analysis(df):
 
     date1 = pd.to_datetime(datetime.now() - timedelta(days=20))
     date2 = pd.to_datetime('today')
-    #date1 = pd.Timestamp(date1, tz="UTC")
-    #date2 = pd.Timestamp(date2, tz="UTC")
+    date1 = pd.Timestamp(date1, tz="UTC")
+    date2 = pd.Timestamp(date2, tz="UTC")
     
     df = df[(df["Date"] >= date1) & (df["Date"] <= date2)]
     df.rename(columns={'District': 'MC'}, inplace=True)

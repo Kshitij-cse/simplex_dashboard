@@ -10,8 +10,8 @@ def historical_analysis1(df):
     # Getting the min and max date
     startDate = pd.to_datetime(df["Date"]).min()
     endDate = pd.to_datetime('today')
-    #date1 = pd.Timestamp(date1, tz="UTC")
-    #date2 = pd.Timestamp(date2, tz="UTC")
+    date1 = pd.Timestamp(date1, tz="UTC")
+    date2 = pd.Timestamp(date2, tz="UTC")
     print(startDate)
     with col1:
         st.markdown('<p style="font-size:22px; color:blue; font-weight:bold;">Historical Analysis</p>', unsafe_allow_html=True)
