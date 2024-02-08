@@ -6,12 +6,12 @@ from utility import df_to_pdf, generate_grouped_df, gen_csv,create_download_butt
 def historical_analysis(df):
     col1, col2, col3 = st.columns((3))
     df["Date"] = pd.to_datetime(df["Date"])
+
     df.rename(columns={'District': 'MC'}, inplace=True)
     # Getting the min and max date
     startDate = pd.to_datetime(df["Date"]).min()
     endDate = pd.to_datetime('today')
-    #date1 = pd.Timestamp(date1, tz="UTC")
-    #date2 = pd.Timestamp(date2, tz="UTC")
+    
     print(startDate)
     with col1:
         st.markdown('<p style="font-size:22px; color:blue; font-weight:bold;">Historical Analysis</p>', unsafe_allow_html=True)
@@ -19,7 +19,8 @@ def historical_analysis(df):
         date1 = pd.to_datetime(st.date_input("Start Date", startDate))
     with col3:
         date2 = pd.to_datetime(st.date_input("End Date", endDate))
-
+    date1 = pd.Timestamp(date1, tz="UTC")
+    date2 = pd.Timestamp(date2, tz="UTC")
     df = df[(df["Date"] >= date1) & (df["Date"] <= date2)]
 
     result = generate_grouped_df(df, ['MC', 'Vendor'])

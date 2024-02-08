@@ -33,6 +33,9 @@ def generate_grouped_df(df, col_list):
     return (df.groupby(col_list)['Property_ID'].nunique().reset_index()
             .rename(columns={'Property_ID': 'Properties Covered'}))
 
+def gen_csv1(df):
+    pdf_buffer = df_to_pdf(df)
+    return df.to_csv(index=False).encode('utf-8'),pdf_buffer
 
 def gen_csv(df, name):
     st.subheader((f" {name} "))
@@ -68,3 +71,78 @@ def firebase_data_loader():
     df = pd.DataFrame(data_list)
     return df
 
+
+def Upload_Full():
+    df =pd.read_excel('haryana7.xlsx')
+    db = firestore.client()
+    data_dict = df.to_dict(orient='records')
+    for i, record in enumerate(data_dict):
+        doc_ref = db.collection("Uploaded_Data").document(f'doc_{i}')
+        doc_ref.set(record)
+    
+def run():
+ 
+    db = firestore.client()
+    doc_ref = db.collection('integers').document('day')
+    doc_ref.set({'Days': 30})
+    doc_ref = db.collection('integers').document('Property')
+    doc_ref.set({'Target': 3000})
+   
+def days_fetcher():
+    db = firestore.client()
+    doc_ref = db.collection('integers').document('day')
+    doc = doc_ref.get()
+    days_data = doc.to_dict()
+    days_value = days_data.get('Days')
+    return days_value
+
+def target_fetcher():
+    db = firestore.client()
+    doc_ref = db.collection('integers').document('Property')
+    doc = doc_ref.get()
+    days_data = doc.to_dict()
+    days_value = days_data.get('Target')
+    return days_value
+    
+def store_days(new_value):
+
+    db = firestore.client()
+    doc_ref = db.collection("integers").document('day')
+    doc_ref.update({'Days': new_value})
+
+def store_target(new_value):
+
+    db = firestore.client()
+    doc_ref = db.collection("integers").document('Property')
+    doc_ref.update({'Target': new_value})
+       
+def Upload_Data(df):
+    db = firestore.client()
+   
+    for index, row in df.iterrows():
+        Property_ID = row['Property_ID']
+        query = db.collection('Dashboard_Testing').where('Property_ID', '==', Property_ID)
+        docs = query.stream()
+
+        for doc in docs:
+            doc.reference.update({
+                'Phone': row['Phone'],
+                'Vendor': row['Vendor'],
+                'Colony': row['Colony'],
+                'District': row['District'],
+                'Property_ID': row['Property_ID'],
+                'Date': row['Date'],
+                
+            })
+
+
+def uploader():
+   
+    df = pd.read_excel("colony.xlsx")
+    colony_names = df["Colony Name"].tolist()
+    db = firestore.client()
+    key_name = "assandh"
+    data = {key_name: colony_names}
+    document_id = "assandh"
+    doc_ref = db.collection('districtwithcolonies').document(document_id)
+    doc_ref.set(data)

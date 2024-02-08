@@ -6,13 +6,11 @@ from utility import  generate_grouped_df, gen_csv,create_download_buttons
 def today_analysis1(df):
     col1, col2, col3 = st.columns((3))
     df["Date"] = pd.to_datetime(df["Date"])
-
     date1 = pd.to_datetime(datetime.now() - timedelta(days=20))
     date2 = pd.to_datetime('today')
-    #date1 = pd.Timestamp(date1, tz="UTC")
-    #date2 = pd.Timestamp(date2, tz="UTC")
-    
-    df = df[(df["Date"] >= date1) & (df["Date"] <= date2)]
+    date1 = pd.Timestamp(date1, tz="UTC")
+    date2 = pd.Timestamp(date2, tz="UTC")
+
 
     with col1:
         st.markdown('<p style="font-size:22px; color:blue; font-weight:bold;">Today Analysis</p>',
