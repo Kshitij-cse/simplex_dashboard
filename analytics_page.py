@@ -6,7 +6,6 @@ def Analytics_tab(df):
     total_properties_covered = df.shape[0]
     set_target = target_fetcher()
     no_of_days= days_fetcher()
-    
     col1, col2 = st.columns((2))
     with col1:
         user_input_target = st.number_input("Set property target:",step=1)   
@@ -30,6 +29,7 @@ def Analytics_tab(df):
                 store_days(user_input_days)
                 store_target(user_input_target)
                 st.success("Updated Succesfully")
+
     properties_left = set_target-total_properties_covered
     perday_prop = properties_left/no_of_days
     col1, col2, col3 = st.columns(3) 
@@ -41,17 +41,17 @@ def Analytics_tab(df):
         st.markdown(f"<h3 style='color: blue;'>Per/day target: {int(perday_prop)}</h3>", unsafe_allow_html=True)
     
     st.header('Search Property')
-    search_criteria = st.selectbox('Search by:', ['Property_ID', 'MC', 'Phone'])
+    search_criteria = st.selectbox('Search by:', ['Property_ID', 'Vendor', 'Mobile'])
     search_query = st.text_input(f'Enter {search_criteria}:')
 
     if search_query:
         # Filtering based on user input
         if search_criteria == 'Property_ID':
             filtered_data = df.query(f'Property_ID == {search_query}')
-        elif search_criteria == 'MC':
-            filtered_data = df.query(f'MC.str.contains("{search_query}", case=False)')
+        elif search_criteria == 'Vendor':
+            filtered_data = df.query(f'Vendor.str.contains("{search_query}", case=False)')
         elif search_criteria == 'Phone':
-            filtered_data = df.query(f'Phone == "{search_query}"')
+            filtered_data = df.query(f'Mobile == "{search_query}"')
         st.dataframe(filtered_data)
         csv,pdf_buffer =gen_csv1(filtered_data)
         create_download_buttons(pdf_buffer,csv,300,400)

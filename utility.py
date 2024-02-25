@@ -6,6 +6,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import os
 import pandas as pd
+from google.api_core.retry import Retry
 
 def df_to_pdf(df):
     buffer = BytesIO()
@@ -63,14 +64,27 @@ def firebase_data_loader():
       firebase_admin.initialize_app(cred)
 
     db = firestore.client()
-    collection_name = "Uploaded_Data" 
-    docs = db.collection(collection_name).stream()
+    collection_name = "assandh" 
+    docs = db.collection(collection_name).stream(retry=Retry())
     data_list = []
     for doc in docs:
         data_list.append(doc.to_dict())
     df = pd.DataFrame(data_list)
     return df
 
+def firebase_data_loader1():
+    if not firebase_admin._apps:
+      cred = credentials.Certificate("firebase-credentials.json")
+      firebase_admin.initialize_app(cred)
+
+    db = firestore.client()
+    collection_name = "assandhSubmitted" 
+    docs = db.collection(collection_name).stream(retry=Retry())
+    data_list = []
+    for doc in docs:
+        data_list.append(doc.to_dict())
+    df = pd.DataFrame(data_list)
+    return df
 
 def Upload_Full():
     df =pd.read_excel('haryana7.xlsx')

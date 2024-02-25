@@ -5,11 +5,12 @@ from utility import  generate_grouped_df, gen_csv,create_download_buttons
 
 def today_analysis1(df):
     col1, col2, col3 = st.columns((3))
-    df["Date"] = pd.to_datetime(df["Date"])
-    date1 = pd.to_datetime(datetime.now() - timedelta(days=20))
+    date1 = pd.to_datetime(datetime.now() - timedelta(days=1))
     date2 = pd.to_datetime('today')
     date1 = pd.Timestamp(date1, tz="UTC")
     date2 = pd.Timestamp(date2, tz="UTC")
+
+    df = df[(df['Date'] >= date1.tz_localize(None)) & (df['Date'] <= date2.tz_localize(None))]
 
 
     with col1:
@@ -26,5 +27,9 @@ def today_analysis1(df):
         create_download_buttons(pdf_buffer4,csv4,67,97)
 
     with col9:
-        csv5,pdf_buffer5= gen_csv(result5,'Colonies wise:')
+        csv5,pdf_buffer5= gen_csv(result5,'Colonies wise')
         create_download_buttons(pdf_buffer5,csv5,68,98)
+
+    
+    csv6,pdf_buffer6= gen_csv(df,'Raw Data')
+    create_download_buttons(pdf_buffer5,csv5,700,701)      
