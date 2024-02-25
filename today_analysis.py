@@ -5,14 +5,12 @@ from utility import  generate_grouped_df, gen_csv,create_download_buttons
 
 
 def today_analysis(df):
-    #df.to_excel('assandh_24feb.xlsx', index=False)
     col1, col2, col3 = st.columns((3))
-    date1 = pd.to_datetime(datetime.now() - timedelta(days=1))
-    date2 = pd.to_datetime('today')
-    date1 = pd.Timestamp(date1, tz="UTC")
-    date2 = pd.Timestamp(date2, tz="UTC")
-
-    df = df[(df['Date'] >= date1.tz_localize(None)) & (df['Date'] <= date2.tz_localize(None))]
+    date1 = pd.to_datetime(datetime.today() - timedelta(days=1))
+    date1 = date1.replace(hour=23, minute=59, second=15)
+    date2 = pd.to_datetime(datetime.now())
+    df = df[(df['Date'] > date1.tz_localize(None)) & (df['Date'] <= date2.tz_localize(None))]
+    
     df.rename(columns={'district': 'MC'}, inplace=True)
     
     with col1:
@@ -54,3 +52,6 @@ def today_analysis(df):
     with col9:
         csv5,pdf_buffer5= gen_csv(result5,'Colonies wise:')
         create_download_buttons(pdf_buffer5,csv5,66,96)
+
+    csv6,pdf_buffer6= gen_csv(df,'Raw Data')
+    create_download_buttons(pdf_buffer5,csv5,800,801)
