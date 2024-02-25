@@ -50,7 +50,7 @@ def Analytics_tab(df):
             filtered_data = df.query(f'Property_ID == {search_query}')
         elif search_criteria == 'Vendor':
             filtered_data = df.query(f'Vendor.str.contains("{search_query}", case=False)')
-        elif search_criteria == 'Phone':
+        elif search_criteria == 'Mobile':
             filtered_data = df.query(f'Mobile == "{search_query}"')
         st.dataframe(filtered_data)
         csv,pdf_buffer =gen_csv1(filtered_data)

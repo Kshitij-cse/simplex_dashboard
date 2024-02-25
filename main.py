@@ -18,7 +18,10 @@ authentication_status, username, authenticator = auth_code()
 
 if authentication_status: 
     authenticator.logout("Logout", "sidebar",key=17)
-    tab_titles = ["Today Analysis", "Historical Analysis","Analytics"]
+    if(username== 'master'):
+     tab_titles = ["Today Analysis", "Historical Analysis","Analytics"]
+    else:
+     tab_titles = ["Today Analysis", "Historical Analysis"] 
     tabs = st.tabs(tab_titles)
     st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
 
@@ -35,18 +38,15 @@ if authentication_status:
     df.rename(columns={'_8_digit_UPID': 'Property_ID'}, inplace=True)
     df.rename(columns={'modifiedAtString':'Date'}, inplace=True)
     df.rename(columns={'mobileNumberOfOwner':'Mobile'}, inplace=True)
-    #-df.to_excel('assandh_24feb.xlsx', index=False)
 
     if username.lower() != "master":
         df = df[df["district"] == username.lower()]
 
-    # Sidebar code start here
     st.sidebar.header("Choose your filter: ")
     if(username=="master"):
      district_list = st.sidebar.multiselect("Pick your District", df["district"].unique())
      if district_list:
         df = df[df["district"].isin(district_list)]
-
     colony_list = st.sidebar.multiselect("Pick the Colony", df["Colony"].unique())
     if colony_list:
         df = df[df["Colony"].isin(colony_list)]

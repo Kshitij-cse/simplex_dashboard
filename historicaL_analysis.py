@@ -8,7 +8,7 @@ def historical_analysis(df):
     col1, col2, col3 = st.columns((3))
    
     startDate = df["Date"].min()
-    endDate = pd.to_datetime(datetime.now())
+    endDate = pd.to_datetime(datetime.today())
     
     with col1:
         st.markdown('<p style="font-size:22px; color:blue; font-weight:bold;">Historical Analysis</p>', unsafe_allow_html=True)
@@ -16,10 +16,11 @@ def historical_analysis(df):
         date1 = pd.to_datetime(st.date_input("Start Date", startDate))
     with col3:
         date2 = pd.to_datetime(st.date_input("End Date", endDate))
-
-    date1 = pd.Timestamp(date1, tz="UTC")
-    date2 = pd.Timestamp(date2, tz="UTC")
-    df = df[(df['Date'] >= date1.tz_localize(None)) & (df['Date'] <= date2.tz_localize(None))]
+    
+    date1 = pd.to_datetime(date1)
+    date2 = pd.to_datetime(date2)
+    date2 = date2 + timedelta(hours=23,minutes=59)
+    df = df[(df['Date'] >= date1) & (df['Date'] <= date2)]
 
     df.rename(columns={'district': 'MC'}, inplace=True)
     result = generate_grouped_df(df, ['MC', 'Vendor'])
@@ -58,3 +59,6 @@ def historical_analysis(df):
     with col9:
         csv5,pdf_buffer5= gen_csv(result5,'Colonies wise:')
         create_download_buttons(pdf_buffer5,csv5,76,86)
+        
+    csv6,pdf_buffer6= gen_csv(df,'Raw Data')
+    create_download_buttons(pdf_buffer5,csv5,805,806)
