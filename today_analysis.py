@@ -54,4 +54,4 @@ def today_analysis(df):
         create_download_buttons(pdf_buffer5,csv5,66,96)
 
     csv6,pdf_buffer6= gen_csv(df,'Raw Data')
-    create_download_buttons(pdf_buffer5,csv5,800,801)
+    create_download_buttons(pdf_buffer6,csv6,800,801)

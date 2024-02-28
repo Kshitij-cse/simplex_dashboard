@@ -61,4 +61,4 @@ def historical_analysis(df):
         create_download_buttons(pdf_buffer5,csv5,76,86)
         
     csv6,pdf_buffer6= gen_csv(df,'Raw Data')
-    create_download_buttons(pdf_buffer5,csv5,805,806)
+    create_download_buttons(pdf_buffer6,csv6,805,806)
