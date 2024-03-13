@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 from datetime import datetime, timedelta
-from utility import  generate_grouped_df, gen_csv,create_download_buttons
+from utility import  generate_grouped_df, gen_csv,create_download_buttons,select_columns
 
 def today_analysis1(df):
     col1, col2, col3 = st.columns((3))
@@ -27,6 +27,6 @@ def today_analysis1(df):
         csv5,pdf_buffer5= gen_csv(result5,'Colonies wise')
         create_download_buttons(pdf_buffer5,csv5,68,98)
 
-    
+    df = select_columns(df)
     csv6,pdf_buffer6= gen_csv(df,'Raw Data')
     create_download_buttons(pdf_buffer6,csv6,700,701)      

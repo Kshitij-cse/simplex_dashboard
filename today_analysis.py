@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 from datetime import datetime, timedelta
-from utility import  generate_grouped_df, gen_csv,create_download_buttons
+from utility import  generate_grouped_df, gen_csv,create_download_buttons,select_columns,send_email
 
 
 def today_analysis(df):
@@ -53,5 +53,19 @@ def today_analysis(df):
         csv5,pdf_buffer5= gen_csv(result5,'Colonies wise:')
         create_download_buttons(pdf_buffer5,csv5,66,96)
 
+    df = select_columns(df)
     csv6,pdf_buffer6= gen_csv(df,'Raw Data')
     create_download_buttons(pdf_buffer6,csv6,800,801)
+
+    st.header("Enter emails to send data")
+    
+    rec_email = []
+    emails_input = st.text_input("Enter Emails (separated by commas) and then press enter:", "",key=900)
+    if st.button("Click to Send Data",key=389):
+        if emails_input: 
+            emails = [email.strip() for email in emails_input.split(",") if email.strip()]  
+            rec_email.extend(emails)
+            st.success(f"Sent data to {len(emails)} email(s)")
+            send_email( rec_email,result4)
+        else:
+            st.warning("Please enter valid emails.")

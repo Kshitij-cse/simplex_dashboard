@@ -34,7 +34,7 @@ if authentication_status:
     
     df.rename(columns={'vmc_colony_name': 'Colony'}, inplace=True)
     df.rename(columns={'vendor_name': 'Vendor'}, inplace=True)
-    df.rename(columns={'userId': 'Phone'}, inplace=True)
+    df.rename(columns={'userPhoneNumber': 'Phone'}, inplace=True)
     df.rename(columns={'_8_digit_UPID': 'Property_ID'}, inplace=True)
     df.rename(columns={'modifiedAtString':'Date'}, inplace=True)
     df.rename(columns={'mobileNumberOfOwner':'Mobile'}, inplace=True)

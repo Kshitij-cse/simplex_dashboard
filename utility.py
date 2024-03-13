@@ -1,3 +1,5 @@
+import base64
+import io
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from io import BytesIO
@@ -7,7 +9,12 @@ from firebase_admin import credentials, firestore
 import os
 import pandas as pd
 from google.api_core.retry import Retry
-
+from twilio.rest import Client
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 def df_to_pdf(df):
     buffer = BytesIO()
 
@@ -160,3 +167,49 @@ def uploader():
     document_id = "assandh"
     doc_ref = db.collection('districtwithcolonies').document(document_id)
     doc_ref.set(data)
+
+def send_email( receiver_emails,dataframe):
+    sender_email = "murfiprop@gmail.com"
+    sender_password = "lvri pmyn iiwj bygn"
+    subject = "Property Data"
+    body = "Please find the attached CSV file."
+
+    message = MIMEMultipart()
+    message['From'] = sender_email
+    message['To'] = ', '.join(receiver_emails)
+    message['Subject'] = subject
+    
+    csv_data = dataframe.to_csv(index=False)
+
+    message.attach(MIMEText(body, 'plain'))
+
+    # Attach CSV data to the email
+    part = MIMEBase('text', 'csv')
+    part.set_payload(csv_data.encode())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', f'attachment; filename={subject}.csv')
+    message.attach(part)
+
+    # Connect to SMTP server
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(sender_email, sender_password)
+
+    # Send email to each recipient
+    for receiver_email in receiver_emails:
+        # Update the receiver email in the message
+        message.replace_header('To', receiver_email)
+        # Send email
+        server.sendmail(sender_email, receiver_email, message.as_string())
+
+    server.quit()
+
+def select_columns(df):
+
+    selected_columns = ['Date', 'Property_ID', 'distributionPossible', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone', 'property_type', 'property_image', 'receiver_image', 'image', 'property_category', 'postal_address', 'plot_area', 'Colony', 'signature', 'reason', 'receiver_name', 'property_usage', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'Vendor', 'MC', 'water_bill_consumer_id', 'nonSubmittable', 'old_Tax_d','landmark']
+   
+    df_filtered = df[selected_columns]
+   
+    df_filtered = df_filtered.reset_index(drop=True)
+    
+    return df_filtered

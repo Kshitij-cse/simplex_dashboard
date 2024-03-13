@@ -2,8 +2,7 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime, timedelta
 from utility import df_to_pdf
-from utility import df_to_pdf, generate_grouped_df, gen_csv,create_download_buttons
-
+from utility import df_to_pdf, generate_grouped_df, gen_csv,create_download_buttons,send_email,select_columns
 def historical_analysis(df):
     col1, col2, col3 = st.columns((3))
    
@@ -59,6 +58,22 @@ def historical_analysis(df):
     with col9:
         csv5,pdf_buffer5= gen_csv(result5,'Colonies wise:')
         create_download_buttons(pdf_buffer5,csv5,76,86)
-        
+
+    df = select_columns(df)    
     csv6,pdf_buffer6= gen_csv(df,'Raw Data')
     create_download_buttons(pdf_buffer6,csv6,805,806)
+
+    st.header("Enter emails to send data")
+    
+    rec_email = []
+    emails_input = st.text_input("Enter Emails (separated by commas) and then press enter:", "",key=567)
+    if st.button("Click to Send Data",key=21):
+        if emails_input: 
+            emails = [email.strip() for email in emails_input.split(",") if email.strip()]  
+            rec_email.extend(emails)
+            st.success(f"Sent data to {len(emails)} email(s)")
+            send_email( rec_email,result4)
+        else:
+            st.warning("Please enter valid emails.")
+    
+        

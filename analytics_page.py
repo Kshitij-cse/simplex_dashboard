@@ -1,8 +1,9 @@
 import pandas as pd
 import streamlit as st
-from utility import days_fetcher,target_fetcher,store_days,store_target,Upload_Data,create_download_buttons,gen_csv1
+from utility import days_fetcher,target_fetcher,store_days,store_target,Upload_Data,create_download_buttons,gen_csv1,select_columns
 def Analytics_tab(df):
-
+    df.rename(columns={'district': 'MC'}, inplace=True)
+    df = select_columns(df) 
     total_properties_covered = df.shape[0]
     set_target = target_fetcher()
     no_of_days= days_fetcher()
@@ -43,7 +44,7 @@ def Analytics_tab(df):
     st.header('Search Property')
     search_criteria = st.selectbox('Search by:', ['Property_ID', 'Vendor', 'Mobile'])
     search_query = st.text_input(f'Enter {search_criteria}:')
-
+    
     if search_query:
         # Filtering based on user input
         if search_criteria == 'Property_ID':
