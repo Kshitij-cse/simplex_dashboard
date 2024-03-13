@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 from utility import df_to_pdf
-from utility import df_to_pdf, generate_grouped_df, gen_csv,create_download_buttons
+from utility import df_to_pdf, generate_grouped_df, gen_csv,create_download_buttons,select_columns
 from datetime import datetime, timedelta
 def historical_analysis1(df):
     col1, col2, col3 = st.columns((3))
@@ -33,6 +33,7 @@ def historical_analysis1(df):
     with col9:
         csv5,pdf_buffer5= gen_csv(result5,'Colonies wise:')
         create_download_buttons(pdf_buffer5,csv5,70,100)
-
+    
+    df = select_columns(df)
     csv6,pdf_buffer6= gen_csv(df,'Raw Data')
     create_download_buttons(pdf_buffer6,csv6,705,706)
