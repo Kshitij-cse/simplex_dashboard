@@ -9,12 +9,6 @@ from firebase_admin import credentials, firestore
 import os
 import pandas as pd
 from google.api_core.retry import Retry
-from twilio.rest import Client
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email import encoders
 def df_to_pdf(df):
     buffer = BytesIO()
 
