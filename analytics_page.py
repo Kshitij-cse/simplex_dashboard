@@ -1,6 +1,9 @@
 import pandas as pd
 import streamlit as st
-from utility import days_fetcher,target_fetcher,store_days,store_target,Upload_Data,create_download_buttons,gen_csv1,select_columns
+from PIL import Image
+import requests
+from io import BytesIO
+from utility import days_fetcher,target_fetcher,store_days,store_target,Upload_Data,create_download_buttons,gen_csv1,select_columns,submit_data,firebase_data_loader2
 def Analytics_tab(df):
     df.rename(columns={'district': 'MC'}, inplace=True)
     df = select_columns(df) 
@@ -74,3 +77,16 @@ def Analytics_tab(df):
         st.write("Preview of the DataFrame:")
         st.write(df)
     
+    st.header("Property Remarks")
+
+    property_id = st.text_input("Enter Property ID:")
+    name = st.text_input("Enter Name:")
+    remarks = st.text_input("Enter Remarks:")
+
+    if st.button("Submit"):
+        submit_data(property_id, name, remarks)
+      
+
+    if st.button("Show remarks"):
+        df1 = firebase_data_loader2() 
+        st.dataframe(df1) 

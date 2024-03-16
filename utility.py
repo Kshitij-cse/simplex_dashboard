@@ -9,6 +9,12 @@ from firebase_admin import credentials, firestore
 import os
 import pandas as pd
 from google.api_core.retry import Retry
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+from datetime import datetime
 def df_to_pdf(df):
     buffer = BytesIO()
 
@@ -80,6 +86,20 @@ def firebase_data_loader1():
 
     db = firestore.client()
     collection_name = "assandhSubmitted" 
+    docs = db.collection(collection_name).stream(retry=Retry())
+    data_list = []
+    for doc in docs:
+        data_list.append(doc.to_dict())
+    df = pd.DataFrame(data_list)
+    return df
+
+def firebase_data_loader2():
+    if not firebase_admin._apps:
+      cred = credentials.Certificate("firebase-credentials.json")
+      firebase_admin.initialize_app(cred)
+
+    db = firestore.client()
+    collection_name = "property_remarks" 
     docs = db.collection(collection_name).stream(retry=Retry())
     data_list = []
     for doc in docs:
@@ -207,3 +227,18 @@ def select_columns(df):
     df_filtered = df_filtered.reset_index(drop=True)
     
     return df_filtered
+
+def submit_data(property_id, name, remarks):
+    if property_id and name and remarks:  
+        db = firestore.client()
+        submission_date = datetime.now()
+        data = {
+            "property_id": property_id,
+            "name": name,
+            "remarks": remarks,
+            "submission_date": submission_date
+        }
+        db.collection("property_remarks").add(data)
+        st.success("Data submitted successfully!")
+    else:
+        st.error("Please fill in all fields.")
