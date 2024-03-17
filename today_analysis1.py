@@ -13,7 +13,7 @@ def today_analysis1(df):
     with col1:
         st.markdown('<p style="font-size:22px; color:blue; font-weight:bold;">Today Analysis</p>',
                     unsafe_allow_html=True)
-   
+    df.rename(columns={'district': 'MC'}, inplace=True)
     result4 = generate_grouped_df(df, ['Phone', 'Colony'])
     result5 = generate_grouped_df(df, ['Colony'])
     total_properties_covered = df.shape[0]

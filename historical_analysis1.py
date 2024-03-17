@@ -9,7 +9,7 @@ def historical_analysis1(df):
   
     startDate = df["Date"].min()
     endDate = pd.to_datetime(datetime.today())
-    
+    df.rename(columns={'district': 'MC'}, inplace=True)
     with col1:
         st.markdown('<p style="font-size:22px; color:blue; font-weight:bold;">Historical Analysis</p>', unsafe_allow_html=True)
     with col2:
