@@ -17,7 +17,7 @@ warnings.filterwarnings('ignore')
 st.title(" :bar_chart: Simplex Dashboard")
 authentication_status, username, authenticator = auth_code()
 if authentication_status:
-    time.sleep(5)
+   
     authenticator.logout("Logout", "sidebar", key=17)
 
     if username == 'master':
