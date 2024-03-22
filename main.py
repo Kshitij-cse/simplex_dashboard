@@ -43,7 +43,7 @@ if authentication_status:
 
     if username.lower() != "master":
         df = df[df["district"] == username.lower()]
-
+    
     st.sidebar.header("Choose your filter: ")
     if(username=="master"):
      district_list = st.sidebar.multiselect("Pick your District", df["district"].unique())
