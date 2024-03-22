@@ -1,8 +1,5 @@
 import pandas as pd
 import streamlit as st
-from PIL import Image
-import requests
-from io import BytesIO
 from utility import days_fetcher,target_fetcher,store_days,store_target,Upload_Data,create_download_buttons,gen_csv1,select_columns,submit_data,firebase_data_loader2
 def Analytics_tab(df):
     df.rename(columns={'district': 'MC'}, inplace=True)
@@ -44,19 +41,20 @@ def Analytics_tab(df):
     with col3:
         st.markdown(f"<h3 style='color: blue;'>Per/day target: {int(perday_prop)}</h3>", unsafe_allow_html=True)
     
+    
     st.header('Search Property')
     search_criteria = st.selectbox('Search by:', ['Property_ID', 'Vendor', 'Mobile'])
     search_query = st.text_input(f'Enter {search_criteria}:')
-    
+
     if search_query:
-        # Filtering based on user input
         if search_criteria == 'Property_ID':
-            filtered_data = df.query(f'Property_ID == {search_query}')
+            filtered_data = df[df['Property_ID'].str.contains(search_query)]
         elif search_criteria == 'Vendor':
-            filtered_data = df.query(f'Vendor.str.contains("{search_query}", case=False)')
+            filtered_data = df[df['Vendor'].str.contains(search_query, case=False)]
         elif search_criteria == 'Mobile':
-            filtered_data = df.query(f'Mobile == "{search_query}"')
-        st.dataframe(filtered_data)
+            filtered_data = df[df['Mobile'] == search_query]
+            
+        st.dataframe(filtered_data)    
         csv,pdf_buffer =gen_csv1(filtered_data)
         create_download_buttons(pdf_buffer,csv,300,400)
 

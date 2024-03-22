@@ -1,5 +1,6 @@
-import base64
-import io
+from PIL import Image
+import requests
+from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from io import BytesIO
@@ -64,7 +65,7 @@ def create_download_buttons(pdf_buffer, csv_data,pdf_key,csv_key):
 
     with col3:
         st.write('')
-
+@st.cache_data
 def firebase_data_loader():
     if not firebase_admin._apps:
       cred = credentials.Certificate("firebase-credentials.json")
@@ -78,7 +79,7 @@ def firebase_data_loader():
         data_list.append(doc.to_dict())
     df = pd.DataFrame(data_list)
     return df
-
+@st.cache_data
 def firebase_data_loader1():
     if not firebase_admin._apps:
       cred = credentials.Certificate("firebase-credentials.json")
@@ -93,6 +94,7 @@ def firebase_data_loader1():
     df = pd.DataFrame(data_list)
     return df
 
+@st.cache_data
 def firebase_data_loader2():
     if not firebase_admin._apps:
       cred = credentials.Certificate("firebase-credentials.json")
@@ -105,6 +107,8 @@ def firebase_data_loader2():
     for doc in docs:
         data_list.append(doc.to_dict())
     df = pd.DataFrame(data_list)
+    df['submission_date'] = pd.to_datetime(df['submission_date']).dt.date
+    
     return df
 
 def Upload_Full():
@@ -242,3 +246,7 @@ def submit_data(property_id, name, remarks):
         st.success("Data submitted successfully!")
     else:
         st.error("Please fill in all fields.")
+
+
+
+        
