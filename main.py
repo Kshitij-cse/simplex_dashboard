@@ -17,6 +17,7 @@ warnings.filterwarnings('ignore')
 st.title(" :bar_chart: Simplex Dashboard")
 authentication_status, username, authenticator = auth_code()
 if authentication_status:
+    time.sleep(5)
     authenticator.logout("Logout", "sidebar", key=17)
 
     if username == 'master':
@@ -38,8 +39,8 @@ if authentication_status:
     df.rename(columns={'vmc_colony_name': 'Colony', 'vendor_name': 'Vendor', 'userPhoneNumber': 'Phone', '_8_digit_UPID': 'Property_ID', 'modifiedAtString':'Date', 'mobileNumberOfOwner':'Mobile'}, inplace=True)
 
     if username.lower() != "master":
-        df = df[df["district"] == username.lower()]
-    
+     df = df[df["district"].str.lower() == username.lower()]
+
     st.sidebar.header("Choose your filter: ")
     if(username=="master"):
      district_list = st.sidebar.multiselect("Pick your District", df["district"].unique())
