@@ -5,7 +5,6 @@ import streamlit as st
 import yaml
 from yaml.loader import SafeLoader
 
-
 def auth_code():
     file_path = Path(__file__).parent / "hashed_pw.pkl"
     cred_path = Path(__file__).parent / "cred.yaml"
@@ -25,15 +24,7 @@ def auth_code():
     )
 
     name, authentication_status, username = authenticator.login("main")
-
-    # if "authentication_status" not in st.session_state:
-    #  st.session_state.authentication_status = authentication_status
-    # if not authentication_status:
-    #     st.error("Username/password is incorrect")
-    # if authentication_status is None:
-    #     st.warning("Enter username and password")
-    
-    
+        
     
     if st.session_state["authentication_status"]:
         st.write(f'Welcome *{st.session_state["name"]}*')
