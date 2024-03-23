@@ -41,6 +41,10 @@ if authentication_status:
 
     if username.lower() != "master":
         df = df[df["district"] == username.lower()]
+    def clear_cache():
+     st.cache_data.clear()
+
+    st.sidebar.button("Refresh",on_click=clear_cache)
 
     st.sidebar.header("Choose your filter: ")
     if(username=="master"):
