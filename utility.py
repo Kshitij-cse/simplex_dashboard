@@ -65,6 +65,21 @@ def create_download_buttons(pdf_buffer, csv_data,pdf_key,csv_key):
 
     with col3:
         st.write('')
+
+def firebase_data_loader5():
+    if not firebase_admin._apps:
+      cred = credentials.Certificate("firebase-credentials.json")
+      firebase_admin.initialize_app(cred)
+
+    db = firestore.client()
+    collection_name = "users" 
+    docs = db.collection(collection_name).stream(retry=Retry())
+    data_list = []
+    for doc in docs:
+        data_list.append(doc.to_dict())
+    df = pd.DataFrame(data_list)
+    return df
+
 @st.cache_data
 def firebase_data_loader():
     if not firebase_admin._apps:
@@ -80,6 +95,21 @@ def firebase_data_loader():
     df = pd.DataFrame(data_list)
     return df
 @st.cache_data
+def firebase_data_loaderfb():
+    if not firebase_admin._apps:
+      cred = credentials.Certificate("firebase-credentials.json")
+      firebase_admin.initialize_app(cred)
+
+    db = firestore.client()
+    collection_name = "faridabad" 
+    docs = db.collection(collection_name).stream(retry=Retry())
+    data_list = []
+    for doc in docs:
+        data_list.append(doc.to_dict())
+    df = pd.DataFrame(data_list)
+    return df
+
+@st.cache_data
 def firebase_data_loader1():
     if not firebase_admin._apps:
       cred = credentials.Certificate("firebase-credentials.json")
@@ -93,6 +123,21 @@ def firebase_data_loader1():
         data_list.append(doc.to_dict())
     df = pd.DataFrame(data_list)
     return df
+@st.cache_data
+def firebase_data_loaderfb1():
+    if not firebase_admin._apps:
+      cred = credentials.Certificate("firebase-credentials.json")
+      firebase_admin.initialize_app(cred)
+
+    db = firestore.client()
+    collection_name = "faridabadSubmitted" 
+    docs = db.collection(collection_name).stream(retry=Retry())
+    data_list = []
+    for doc in docs:
+        data_list.append(doc.to_dict())
+    df = pd.DataFrame(data_list)
+    return df
+
 
 @st.cache_data
 def firebase_data_loader2():
@@ -232,6 +277,15 @@ def select_columns(df):
     
     return df_filtered
 
+def select_columns_faridabad(df):
+
+    selected_columns = ['sn','Date', 'Property_ID', 'distributionPossible', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone', 'property_category', 'property_image', 'receiver_image', 'image',  'postal_address', 'Colony', 'signature', 'city', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'MC',  'old_Tax_d','landmark',' Unit ',' authorizedAreaOrUnauthorized ','authorityUnderWhichAreaFalls']
+   
+    df_filtered = df[selected_columns]
+   
+    df_filtered = df_filtered.reset_index(drop=True)
+    
+    return df_filtered
 def submit_data(property_id, name, remarks):
     if property_id and name and remarks:  
         db = firestore.client()
