@@ -279,7 +279,7 @@ def select_columns(df):
 
 def select_columns_faridabad(df):
 
-    selected_columns = ['sn','Date', 'Property_ID', 'distributionPossible', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone', 'property_category', 'property_image', 'receiver_image', 'image',  'postal_address', 'Colony', 'signature', 'city', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'MC',  'old_Tax_d','landmark',' Unit ',' authorizedAreaOrUnauthorized ','authorityUnderWhichAreaFalls']
+    selected_columns = ['sn','Date', 'Property_ID', 'distributionPossible', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone','aadhaarNumber', 'property_category', 'property_image', 'receiver_image', 'image',  'postal_address', 'Colony', 'signature', 'city', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'old_Tax_d','landmark',' Unit ',' authorizedAreaOrUnauthorized ','authorityUnderWhichAreaFalls']
    
     df_filtered = df[selected_columns]
    
