@@ -282,9 +282,10 @@ def select_columns_faridabad(df):
     selected_columns = ['sn','Date', 'Property_ID', 'distributionPossible', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone','aadhaarNumber', 'property_category', 'property_image', 'receiver_image', 'image',  'postal_address', 'Colony', 'signature', 'city', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'old_Tax_d','landmark',' Unit ',' authorizedAreaOrUnauthorized ','authorityUnderWhichAreaFalls']
    
     df_filtered = df[selected_columns]
-   
+    df_filtered = df_filtered.sort_values(by='Date')
     df_filtered = df_filtered.reset_index(drop=True)
     
+
     return df_filtered
 def submit_data(property_id, name, remarks):
     if property_id and name and remarks:  
