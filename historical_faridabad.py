@@ -5,8 +5,8 @@ from utility import df_to_pdf, generate_grouped_df, gen_csv,create_download_butt
 from datetime import datetime, timedelta
 def historical_analysis_faridabad(df):
     col1, col2, col3 = st.columns((3))
-    df["Date"] = pd.to_datetime(df["Date"])
-  
+
+    df['Date'] = df['Date'].dt.tz_convert('Asia/Kolkata')
     startDate = df["Date"].min()
     endDate = pd.to_datetime(datetime.today())
     
@@ -17,10 +17,13 @@ def historical_analysis_faridabad(df):
     with col3:
         date2 = pd.to_datetime(st.date_input("End Date", endDate,key=2222))
     
-    date1 = pd.to_datetime(date1)
-    date2 = pd.to_datetime(date2)
+    date1 = pd.to_datetime(date1).tz_localize('UTC').tz_convert('Asia/Kolkata')
+    date2 = pd.to_datetime(date2).tz_localize('UTC').tz_convert('Asia/Kolkata')
     date2 = date2 + timedelta(hours=23,minutes=59)
+
     df = df[(df['Date'] >= date1) & (df['Date'] <= date2)]
+    df['Date'] = df['Date'].dt.strftime('%Y-%m-%d %H:%M:%S')
+    
     df.rename(columns={'district': 'MC'}, inplace=True)
     result4 = generate_grouped_df(df, ['Phone', 'Colony'])
     result5 = generate_grouped_df(df, ['Colony'])

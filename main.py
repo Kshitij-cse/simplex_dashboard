@@ -51,10 +51,12 @@ if authentication_status:
     fbdf = firebase_data_loaderfb()
     fbdf1= firebase_data_loaderfb1()
     fbdf = pd.merge(fbdf1, fbdf[[' Unit ',' authorizedAreaOrUnauthorized ','authorityUnderWhichAreaFalls' ,'_8_digit_UPID']], on='_8_digit_UPID', how='left')
-     
-    fbdf["district"] = df["district"].str.lower()
-    fbdf['modifiedAtString'] = pd.to_datetime(fbdf['modifiedAtString'], unit='ms')
     
+    fbdf["district"] = df["district"].str.lower()
+    
+    fbdf['modifiedAtString'] = pd.to_datetime(fbdf['modifiedAtString'], unit='ms')
+    fbdf['modifiedAtString'] = fbdf['modifiedAtString'].dt.tz_localize('UTC').dt.tz_convert('Asia/Kolkata')
+
     fbdf.rename(columns={'vmc_colony_name': 'Colony'}, inplace=True)
     fbdf.rename(columns={'vendor_name': 'Vendor'}, inplace=True)
     fbdf.rename(columns={'userPhoneNumber': 'Phone'}, inplace=True)
