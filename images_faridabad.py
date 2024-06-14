@@ -16,7 +16,7 @@ def image_faridabad(df):
     if st.button("Show remarks",key=12647):
         df1 = firebase_data_loader2() 
         st.dataframe(df1) 
-    
+    df['Date'] = df['Date'].dt.tz_convert('Asia/Kolkata')
     col1, col2, col3 = st.columns((3))
    
     startDate = pd.to_datetime(datetime.today() - timedelta(days=1))
@@ -28,11 +28,13 @@ def image_faridabad(df):
         date1 = pd.to_datetime(st.date_input("Start Date", startDate,key=12999))
     with col3:
         date2 = pd.to_datetime(st.date_input("End Date", endDate,key=12000))
-
-    date1 = date1.replace(hour=23, minute=59, second=15)
-    date2 = pd.to_datetime(date2)
+    
+    date1 = date1.replace(hour=23, minute=59, second=15).tz_localize('UTC').tz_convert('Asia/Kolkata')
+    date2 = pd.to_datetime(date2).tz_localize('UTC').tz_convert('Asia/Kolkata')
     date2 = date2 + timedelta(hours=23,minutes=59)
-    df = df[(df['Date'] > date1.tz_localize(None)) & (df['Date'] <= date2.tz_localize(None))]
+
+    
+    df = df[(df['Date'] > date1) & (df['Date'] <= date2)]
     
     search_property_id = st.text_input("Search by Property ID",key=1343)
     col1, col2,col3 = st.columns(3)
