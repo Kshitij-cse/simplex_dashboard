@@ -49,6 +49,7 @@ if authentication_status:
     df.rename(columns={'mobileNumberOfOwner':'Mobile'}, inplace=True) 
     
     fbdf = firebase_data_loaderfb()
+
     fbdf1= firebase_data_loaderfb1()
     fbdf = pd.merge(fbdf1, fbdf[[' Unit ',' authorizedAreaOrUnauthorized ','authorityUnderWhichAreaFalls' ,'_8_digit_UPID']], on='_8_digit_UPID', how='left')
     
@@ -74,7 +75,7 @@ if authentication_status:
         df = df[df["district"].isin(district_list)]
     colony_list = st.sidebar.multiselect("Pick the Colony", df["Colony"].unique())
     if colony_list:
-        df = df[df["Colony"].isin(colony_list)]
+        fbdf = fbdf[fbdf["Colony"].isin(colony_list)]
     if(username=="master"):
      vendor_list = st.sidebar.multiselect("Pick the Vendor", df["Vendor"].unique())
      if vendor_list:
