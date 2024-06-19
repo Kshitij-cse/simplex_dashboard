@@ -73,7 +73,7 @@ if authentication_status:
      district_list = st.sidebar.multiselect("Pick your District", df["district"].unique())
      if district_list:
         df = df[df["district"].isin(district_list)]
-    colony_list = st.sidebar.multiselect("Pick the Colony", df["Colony"].unique())
+    colony_list = st.sidebar.multiselect("Pick the Colony", fbdf["Colony"].unique())
     if colony_list:
         fbdf = fbdf[fbdf["Colony"].isin(colony_list)]
     if(username=="master"):
