@@ -34,5 +34,6 @@ def today_analysis_faridabad(df):
         create_download_buttons(pdf_buffer5,csv5,68,98)
 
     df = select_columns_faridabad(df)
+    
     csv6,pdf_buffer6= gen_csv(df,'Raw Data')
     create_download_buttons(pdf_buffer6,csv6,700,701)

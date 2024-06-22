@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
-from utility import df_to_pdf
-from utility import df_to_pdf, generate_grouped_df, gen_csv,create_download_buttons,select_columns,select_columns_faridabad
+from utility import generate_grouped_df, gen_csv,create_download_buttons,select_columns_faridabad
 from datetime import datetime, timedelta
 def historical_analysis_faridabad(df):
     col1, col2, col3 = st.columns((3))
