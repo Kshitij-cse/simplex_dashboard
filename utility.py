@@ -98,17 +98,37 @@ def firebase_data_loader():
 @st.cache_data
 def firebase_data_loaderfb():
     if not firebase_admin._apps:
-      cred = credentials.Certificate("firebase-credentials.json")
-      firebase_admin.initialize_app(cred)
+        cred = credentials.Certificate("firebase-credentials.json")
+        firebase_admin.initialize_app(cred)
 
     db = firestore.client()
-    collection_name = "faridabad" 
-    docs = db.collection(collection_name).stream(retry=Retry())
+    collections = db.collections()
+
     data_list = []
-    for doc in docs:
-        data_list.append(doc.to_dict())
+
+    for collection in collections:
+        collection_name = collection.id
+        if collection_name.startswith("faridabad_"):
+            docs = db.collection(collection_name).stream(retry=Retry())
+            for doc in docs:
+                data_list.append(doc.to_dict())
+
     df = pd.DataFrame(data_list)
+    
     return df
+# def firebase_data_loaderfb():
+#     if not firebase_admin._apps:
+#       cred = credentials.Certificate("firebase-credentials.json")
+#       firebase_admin.initialize_app(cred)
+
+#     db = firestore.client()
+#     collection_name = "faridabad" 
+#     docs = db.collection(collection_name).stream(retry=Retry())
+#     data_list = []
+#     for doc in docs:
+#         data_list.append(doc.to_dict())
+#     df = pd.DataFrame(data_list)
+#     return df
 
 @st.cache_data
 def firebase_data_loader1():
