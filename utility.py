@@ -81,6 +81,7 @@ def firebase_data_loader5():
     df = pd.DataFrame(data_list)
     return df
 
+
 @st.cache_data
 def firebase_data_loader():
     if not firebase_admin._apps:
@@ -96,41 +97,6 @@ def firebase_data_loader():
     df = pd.DataFrame(data_list)
     return df
 @st.cache_data
-def firebase_data_loaderfb():
-    if not firebase_admin._apps:
-        cred = credentials.Certificate("firebase-credentials.json")
-        firebase_admin.initialize_app(cred)
-
-    db = firestore.client()
-    collections = db.collections()
-
-    data_list = []
-
-    for collection in collections:
-        collection_name = collection.id
-        if collection_name.startswith("faridabad_"):
-            docs = db.collection(collection_name).stream(retry=Retry())
-            for doc in docs:
-                data_list.append(doc.to_dict())
-
-    df = pd.DataFrame(data_list)
-    
-    return df
-# def firebase_data_loaderfb():
-#     if not firebase_admin._apps:
-#       cred = credentials.Certificate("firebase-credentials.json")
-#       firebase_admin.initialize_app(cred)
-
-#     db = firestore.client()
-#     collection_name = "faridabad" 
-#     docs = db.collection(collection_name).stream(retry=Retry())
-#     data_list = []
-#     for doc in docs:
-#         data_list.append(doc.to_dict())
-#     df = pd.DataFrame(data_list)
-#     return df
-
-@st.cache_data
 def firebase_data_loader1():
     if not firebase_admin._apps:
       cred = credentials.Certificate("firebase-credentials.json")
@@ -144,6 +110,45 @@ def firebase_data_loader1():
         data_list.append(doc.to_dict())
     df = pd.DataFrame(data_list)
     return df
+
+###########################################################
+@st.cache_data
+def firebase_data_loaderfb():
+    if not firebase_admin._apps:
+        cred = credentials.Certificate("firebase-credentials.json")
+        firebase_admin.initialize_app(cred)
+
+    db = firestore.client()
+    collections = db.collections()
+
+    data_list = []
+
+    for collection in collections:
+        collection_name = collection.id
+        if collection_name.startswith("faridabad_") and "Submitted" not in collection_name:
+            docs = db.collection(collection_name).stream(retry=Retry())
+            for doc in docs:
+                data_list.append(doc.to_dict())
+
+    df = pd.DataFrame(data_list)
+    return df
+
+@st.cache_data
+def firebase_data_loaderonlyfb():
+    if not firebase_admin._apps:
+      cred = credentials.Certificate("firebase-credentials.json")
+      firebase_admin.initialize_app(cred)
+
+    db = firestore.client()
+    collection_name = "faridabad" 
+    docs = db.collection(collection_name).stream(retry=Retry())
+    data_list = []
+    for doc in docs:
+        data_list.append(doc.to_dict())
+    df = pd.DataFrame(data_list)
+    return df
+
+
 @st.cache_data
 def firebase_data_loaderfb1():
     if not firebase_admin._apps:
@@ -159,7 +164,27 @@ def firebase_data_loaderfb1():
     df = pd.DataFrame(data_list)
     return df
 
+@st.cache_data
+def fetch_faridabad_include_submitted():
+    if not firebase_admin._apps:
+        cred = credentials.Certificate("firebase-credentials.json")
+        firebase_admin.initialize_app(cred)
 
+    db = firestore.client()
+    collections = db.collections()
+
+    data_list = []
+
+    for collection in collections:
+        collection_name = collection.id
+        if collection_name.startswith("faridabad_") and "Submitted" in collection_name:
+            docs = db.collection(collection_name).stream(retry=Retry())
+            for doc in docs:
+                data_list.append(doc.to_dict())
+
+    df = pd.DataFrame(data_list)
+    return df
+#######################################################################3
 @st.cache_data
 def firebase_data_loader2():
     if not firebase_admin._apps:
@@ -300,7 +325,7 @@ def select_columns(df):
 
 def select_columns_faridabad(df):
 
-    selected_columns = ['sn','Date', 'Property_ID', 'distributionPossible', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone','aadhaarNumber', 'property_category', 'property_image', 'receiver_image', 'image',  'postal_address', 'Colony', 'signature', 'city', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'old_Tax_d','landmark',' Unit ',' authorizedAreaOrUnauthorized ' ,'authorityUnderWhichAreaFalls']
+    selected_columns = ['sn','Date', 'Property_ID', 'distributionPossible','reason', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone','aadhaarNumber', 'property_category', 'property_image', 'receiver_image', 'image',  'postal_address', 'Colony', 'signature', 'city', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'old_Tax_d','landmark',' Unit ',' authorizedAreaOrUnauthorized ' ,'authorityUnderWhichAreaFalls']
    
     df_filtered = df[selected_columns]
     df_filtered = df_filtered.sort_values(by='Date')

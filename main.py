@@ -7,7 +7,7 @@ from today_analysis import today_analysis
 from historicaL_analysis import historical_analysis
 from today_analysis1 import today_analysis1
 from historical_analysis1 import historical_analysis1
-from utility import firebase_data_loader,firebase_data_loader1,firebase_data_loaderfb,firebase_data_loaderfb1
+from utility import firebase_data_loader,firebase_data_loader1,firebase_data_loaderfb,firebase_data_loaderfb1,firebase_data_loaderonlyfb,fetch_faridabad_include_submitted
 import streamlit_authenticator as stauth
 from analytics_page import  Analytics_tab
 from today_faridabad import today_analysis_faridabad
@@ -49,14 +49,25 @@ if authentication_status:
     # df.rename(columns={'modifiedAtString':'Date'}, inplace=True)
     # df.rename(columns={'mobileNumberOfOwner':'Mobile'}, inplace=True) 
     
-    fbdf = firebase_data_loaderfb()
+    df1 = firebase_data_loaderfb()
+    df2 = firebase_data_loaderonlyfb()
+    df1.drop(columns=['distributionPossible','property_image'], inplace=True)
+    df2.rename(columns={'property_image': 'image'}, inplace=True)
+    df2.drop(columns=['distributionPossible'], inplace=True)
 
-    fbdf1= firebase_data_loaderfb1()
-    
-    fbdf = pd.merge(fbdf1, fbdf[['_8_digit_UPID']], on='_8_digit_UPID', how='left')
-    
+    fbdf = pd.concat([df1, df2], ignore_index=True)
+
+    df3= firebase_data_loaderfb1()
+    df4 = fetch_faridabad_include_submitted()
+    df3.drop(columns=['﻿_sr','aadharNumber','authorityUnderWhichAreaFalls','ModifiedAtString',' authorizedAreaOrUnauthorized ',' Unit ','image'], inplace=True)
+
+    fbdf1 = pd.concat([df3, df4], ignore_index=True)
+    fbdf1.drop(columns=['image'],inplace=True)
+
+    fbdf = pd.merge(fbdf1, fbdf[['_8_digit_UPID',' Unit ', ' authorizedAreaOrUnauthorized ', 'authorityUnderWhichAreaFalls','image']], on='_8_digit_UPID', how='left')
+    fbdf.to_excel('finalcheck.xlsx')
+
     fbdf["district"] = fbdf["district"].str.lower()
-    
     fbdf['modifiedAtString'] = pd.to_datetime(fbdf['modifiedAtString'], unit='ms')
     fbdf['modifiedAtString'] = fbdf['modifiedAtString'].dt.tz_localize('UTC').dt.tz_convert('Asia/Kolkata')
 
@@ -71,7 +82,7 @@ if authentication_status:
     #     df = df[df["district"] == username.lower()]
 
     #fbdf.to_excel('22june.xlsx')
-
+    
     st.sidebar.header("Choose your filter: ")
     if(username=="master"):
      district_list = st.sidebar.multiselect("Pick your District", fbdf["district"].unique())
