@@ -35,29 +35,23 @@ def image_faridabad(df):
 
     
     df = df[(df['Date'] > date1) & (df['Date'] <= date2)]
-    
+
     search_property_id = st.text_input("Search by Property ID",key=1343)
-    col1, col2,col3 = st.columns(3)
+    col1, col2= st.columns(2)
     if search_property_id:
         with col1:
             st.subheader("Property Images")
             display_images(df, search_property_id, 'property_image')
         with col2:
-            st.subheader("Property Old Images")
-            display_images(df, search_property_id, 'image')
-        with col3:
             st.subheader("Receiver Images")
-            display_images(df, search_property_id, 'receiver_image')    
+            display_images(df, search_property_id, 'image')    
     else:
         with col1:
             st.subheader("Property Images")
             display_images(df, column='property_image')
         with col2:
-            st.subheader("Property Old Images")
-            display_images(df, column='image')
-        with col3:
             st.subheader("Receiver Images")
-            display_images(df, column='receiver_image')
+            display_images(df, column='image')
            
 @st.cache_data
 def display_images(df, search_property_id=None, column=None):
