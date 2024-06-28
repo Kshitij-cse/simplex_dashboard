@@ -35,41 +35,27 @@ def Image_tab(df):
     df = df[(df['Date'] > date1.tz_localize(None)) & (df['Date'] <= date2.tz_localize(None))]
     
     search_property_id = st.text_input("Search by Property ID")
-<<<<<<< HEAD
     col1, col2,col3 = st.columns(3)
-=======
-    col1, col2= st.columns(2)
->>>>>>> 9be8218 (new)
     if search_property_id:
         with col1:
             st.subheader("Property Images")
             display_images(df, search_property_id, 'property_image')
         with col2:
-<<<<<<< HEAD
             st.subheader("Property Old Images")
             display_images(df, search_property_id, 'image')
         with col3:
             st.subheader("Receiver Images")
             display_images(df, search_property_id, 'receiver_image')    
-=======
-            st.subheader("Receiver Images")
-            display_images(df, search_property_id, 'image')    
->>>>>>> 9be8218 (new)
     else:
         with col1:
             st.subheader("Property Images")
             display_images(df, column='property_image')
         with col2:
-<<<<<<< HEAD
             st.subheader("Property Old Images")
             display_images(df, column='image')
         with col3:
             st.subheader("Receiver Images")
             display_images(df, column='receiver_image')
-=======
-            st.subheader("Receiver Images")
-            display_images(df, column='image')
->>>>>>> 9be8218 (new)
            
 @st.cache_data
 def display_images(df, search_property_id=None, column=None):
