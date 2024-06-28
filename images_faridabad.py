@@ -40,17 +40,17 @@ def image_faridabad(df):
     col1, col2= st.columns(2)
     if search_property_id:
         with col1:
-            st.subheader("Property Images")
-            display_images(df, search_property_id, 'image')
-        with col2:
             st.subheader("Receiver Images")
+            display_images(df, search_property_id, 'property_image')
+        with col2:
+            st.subheader("Property Images")
             display_images(df, search_property_id, 'image')    
     else:
         with col1:
-            st.subheader("Property Images")
-            display_images(df, column='image')
-        with col2:
             st.subheader("Receiver Images")
+            display_images(df, column='property_image')
+        with col2:
+            st.subheader("Property Images")
             display_images(df, column='image')
            
 @st.cache_data
