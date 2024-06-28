@@ -112,12 +112,23 @@ def firebase_data_loader1():
     return df
 
 ###########################################################
+<<<<<<< HEAD
 @st.cache_data
 def firebase_data_loaderfb():
+=======
+def initialize_firebase():
+>>>>>>> 9be8218 (new)
     if not firebase_admin._apps:
         cred = credentials.Certificate("firebase-credentials.json")
         firebase_admin.initialize_app(cred)
 
+<<<<<<< HEAD
+=======
+@st.cache_data
+def firebase_data_loaderfb():
+    initialize_firebase()
+
+>>>>>>> 9be8218 (new)
     db = firestore.client()
     collections = db.collections()
 
@@ -135,12 +146,19 @@ def firebase_data_loaderfb():
 
 @st.cache_data
 def firebase_data_loaderonlyfb():
+<<<<<<< HEAD
     if not firebase_admin._apps:
       cred = credentials.Certificate("firebase-credentials.json")
       firebase_admin.initialize_app(cred)
 
     db = firestore.client()
     collection_name = "faridabad" 
+=======
+    initialize_firebase()
+
+    db = firestore.client()
+    collection_name = "faridabad"
+>>>>>>> 9be8218 (new)
     docs = db.collection(collection_name).stream(retry=Retry())
     data_list = []
     for doc in docs:
@@ -148,6 +166,7 @@ def firebase_data_loaderonlyfb():
     df = pd.DataFrame(data_list)
     return df
 
+<<<<<<< HEAD
 
 @st.cache_data
 def firebase_data_loaderfb1():
@@ -157,18 +176,33 @@ def firebase_data_loaderfb1():
 
     db = firestore.client()
     collection_name = "faridabadSubmitted" 
+=======
+@st.cache_data
+def firebase_data_loaderfb1():
+    initialize_firebase()
+
+    db = firestore.client()
+    collection_name = "faridabadSubmitted"
+>>>>>>> 9be8218 (new)
     docs = db.collection(collection_name).stream(retry=Retry())
     data_list = []
     for doc in docs:
         data_list.append(doc.to_dict())
     df = pd.DataFrame(data_list)
     return df
+<<<<<<< HEAD
 
 @st.cache_data
 def fetch_faridabad_include_submitted():
     if not firebase_admin._apps:
         cred = credentials.Certificate("firebase-credentials.json")
         firebase_admin.initialize_app(cred)
+=======
+#
+@st.cache_data
+def fetch_faridabad_include_submitted():
+    initialize_firebase()
+>>>>>>> 9be8218 (new)
 
     db = firestore.client()
     collections = db.collections()
