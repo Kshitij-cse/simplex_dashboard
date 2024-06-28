@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9be8218 (new)
 matplotlib           ==      3.8.2
 numpy                ==      1.24.2
 openpyxl             ==      3.1.2
