@@ -17,6 +17,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 from datetime import datetime
+from const import cols_to_be_removed,cols_to_be_removed1,cols_to_be_removed2,cols_to_be_removed3
 def df_to_pdf(df):
     buffer = BytesIO()
 
@@ -131,6 +132,8 @@ def firebase_data_loaderfb():
                 data_list.append(doc.to_dict())
 
     df = pd.DataFrame(data_list)
+    df = df[['_8_digit_UPID','image']]
+    #df = df.drop(columns= cols_to_be_removed)
     return df
 
 @st.cache_data
@@ -146,6 +149,9 @@ def firebase_data_loaderonlyfb():
     for doc in docs:
         data_list.append(doc.to_dict())
     df = pd.DataFrame(data_list)
+    df.rename(columns={'property_image': 'image'}, inplace=True)
+    df = df[['_8_digit_UPID','image']]
+    #df = df.drop(columns=cols_to_be_removed1)
     return df
 
 
@@ -162,6 +168,7 @@ def firebase_data_loaderfb1():
     for doc in docs:
         data_list.append(doc.to_dict())
     df = pd.DataFrame(data_list)
+    df.drop(columns=cols_to_be_removed2,inplace=True)
     return df
 
 @st.cache_data
@@ -183,6 +190,7 @@ def fetch_faridabad_include_submitted():
                 data_list.append(doc.to_dict())
 
     df = pd.DataFrame(data_list)
+    df.drop(columns=cols_to_be_removed3,inplace=True)
     return df
 #######################################################################3
 @st.cache_data
@@ -315,7 +323,7 @@ def send_email( receiver_emails,dataframe):
 
 def select_columns(df):
 
-    selected_columns = ['Date', 'Property_ID', 'distributionPossible', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone', 'property_type', 'property_image', 'receiver_image', 'image', 'property_category', 'postal_address', 'plot_area', 'Colony', 'signature', 'reason', 'receiver_name', 'property_usage', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'Vendor', 'MC', 'water_bill_consumer_id', 'nonSubmittable', 'old_Tax_d','landmark']
+    selected_columns = ['Date', 'Property_ID', 'distributionPossible', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone', 'property_type', 'property_image', 'receiver_image', 'property_category', 'postal_address', 'plot_area', 'Colony', 'signature', 'reason', 'receiver_name', 'property_usage', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'Vendor', 'MC', 'water_bill_consumer_id', 'nonSubmittable', 'old_Tax_d','landmark']
    
     df_filtered = df[selected_columns]
    
@@ -325,7 +333,7 @@ def select_columns(df):
 
 def select_columns_faridabad(df):
 
-    selected_columns = ['sn','Date', 'Property_ID', 'distributionPossible','reason', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone','aadhaarNumber', 'property_category', 'property_image', 'receiver_image', 'image',  'postal_address', 'Colony', 'signature', 'city', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'old_Tax_d','landmark',' Unit ',' authorizedAreaOrUnauthorized ' ,'authorityUnderWhichAreaFalls']
+    selected_columns = ['Date', 'Property_ID', 'distributionPossible','reason', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone','aadhaarNumber', "property_image",'receiver_image', 'Colony', 'signature', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName']
    
     df_filtered = df[selected_columns]
     df_filtered = df_filtered.sort_values(by='Date')

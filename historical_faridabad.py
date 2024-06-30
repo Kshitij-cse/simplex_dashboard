@@ -24,8 +24,10 @@ def historical_analysis_faridabad(df):
     df['Date'] = df['Date'].dt.strftime('%Y-%m-%d %H:%M:%S')
     
     df.rename(columns={'district': 'MC'}, inplace=True)
-    result4 = generate_grouped_df(df, ['Phone', 'Colony'])
-    result5 = generate_grouped_df(df, ['Colony'])
+
+    result4 = generate_grouped_df(df[['Property_ID','Phone', 'Colony']], ['Phone', 'Colony'])
+    result5 = generate_grouped_df(df[['Property_ID', 'Colony']], ['Colony'])
+
     total_properties_covered = df.shape[0]
     col8, col9 = st.columns((2))
     with col8:
