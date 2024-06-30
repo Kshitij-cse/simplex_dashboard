@@ -6,7 +6,7 @@ from utility import  generate_grouped_df, gen_csv,create_download_buttons,select
 
 def today_analysis_faridabad(df):
     
-    col1, col2, col3 = st.columns((3))
+    col1,col2 = st.columns((2))
 
     
     df['Date'] = df['Date'].dt.tz_convert('Asia/Kolkata')
@@ -19,9 +19,11 @@ def today_analysis_faridabad(df):
     with col1:
         st.markdown('<p style="font-size:22px; color:blue; font-weight:bold;">Today Analysis</p>',
                     unsafe_allow_html=True)
-    df.rename(columns={'district': 'MC'}, inplace=True)
-    result4 = generate_grouped_df(df, ['Phone', 'Colony'])
-    result5 = generate_grouped_df(df, ['Colony'])
+    
+    result4 = generate_grouped_df(df[['Property_ID','Phone', 'Colony']], ['Phone', 'Colony'])
+    result5 = generate_grouped_df(df[['Property_ID', 'Colony']], ['Colony'])
+
+
     total_properties_covered = df.shape[0]
     col8, col9 = st.columns((2))
     
