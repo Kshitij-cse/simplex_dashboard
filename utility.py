@@ -333,7 +333,7 @@ def select_columns(df):
 
 def select_columns_faridabad(df):
 
-    selected_columns = ['Date', 'Property_ID', 'distributionPossible','reason', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone','aadhaarNumber', "property_image",'receiver_image', 'Colony', 'signature', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName']
+    selected_columns = ['Date', 'Property_ID','sn','distributionPossible','reason', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone','aadhaarNumber', "property_image",'receiver_image', 'Colony', 'signature', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName']
    
     df_filtered = df[selected_columns]
     df_filtered = df_filtered.sort_values(by='Date')
