@@ -103,8 +103,7 @@ if authentication_status:
             today_analysis_faridabad(fbdf)
         with tabs[1]:
             historical_analysis_faridabad(fbdf)
-        if st.sidebar.button("Show Images",key=12990):    
-            with tabs[2]:
+        with tabs[2]:
                 image_faridabad(fbdf)
 #3elif(username=='assandh'):
         # with tabs[0]:
