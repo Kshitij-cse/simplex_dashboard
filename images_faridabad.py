@@ -5,8 +5,9 @@ from PIL import Image
 import requests
 from io import BytesIO
 from utility import submit_data,firebase_data_loader2
-def image_faridabad(df):
 
+def image_faridabad(df):
+ if st.button("Show Images",key=12990):
     st.header("Property Remarks")
     property_id = st.text_input("Enter Property ID:",key=12798)
     name = st.text_input("Enter Name:",key=12645)
