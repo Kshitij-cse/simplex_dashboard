@@ -15,7 +15,11 @@ def today_analysis_faridabad(df):
     date2 = datetime.now(tz=pytz.timezone('Asia/Kolkata'))
     df = df[(df['Date'] > date1) & (df['Date'] <= date2)]
     df['Date'] = df['Date'].dt.strftime('%Y-%m-%d %H:%M:%S')
-    unique_phone_numbers_count = df['Surveyor number'].nunique()
+    
+    result6 = generate_grouped_df1(df[['Surveyor number', 'Colony']], ['Colony'])
+    active_list = result6['Active Users'].tolist()
+    unique_phone_numbers_count = sum(active_list)
+
     with col1:
         st.markdown('<p style="font-size:22px; color:blue; font-weight:bold;">Today Analysis</p>',
                     unsafe_allow_html=True)
@@ -23,8 +27,7 @@ def today_analysis_faridabad(df):
         st.markdown((f" {'Active users:'} {unique_phone_numbers_count}"))
     result4 = generate_grouped_df(df[['Property_ID','Surveyor number', 'Colony']], ['Surveyor number', 'Colony'])
     result5 = generate_grouped_df(df[['Property_ID', 'Colony']], ['Colony'])
-    result6 = generate_grouped_df1(df[['Surveyor number', 'Colony']], ['Colony'])
-    active_list = result6['Active Users'].tolist()
+    
     result5['Active Users']= active_list
     total_properties_covered = df.shape[0]
     col8, col9 = st.columns((2))
