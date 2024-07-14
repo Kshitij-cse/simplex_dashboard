@@ -44,6 +44,10 @@ def generate_grouped_df(df, col_list):
     return (df.groupby(col_list)['Property_ID'].nunique().reset_index()
             .rename(columns={'Property_ID': 'Properties Covered'}))
 
+def generate_grouped_df1(df, col_list):
+    return (df.groupby(col_list)['Surveyor number'].nunique().reset_index()
+            .rename(columns={'Surveyor number': 'Active Users'}))
+
 def gen_csv1(df):
     pdf_buffer = df_to_pdf(df)
     return df.to_csv(index=False).encode('utf-8'),pdf_buffer
@@ -58,7 +62,7 @@ def create_download_buttons(pdf_buffer, csv_data,pdf_key,csv_key):
     col1, col2, col3 = st.columns(3)  
 
     with col1:
-        st.download_button(label="Download PDF", data=pdf_buffer, file_name="dataframe.pdf",
+        st.download_button(label="Download PDF", data=pdf_buffer, file_name="Property.pdf",
                            mime="application/pdf", key=pdf_key)
 
     with col2:
@@ -323,7 +327,7 @@ def send_email( receiver_emails,dataframe):
 
 def select_columns(df):
 
-    selected_columns = ['Date', 'Property_ID', 'distributionPossible', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone', 'property_type', 'property_image', 'receiver_image', 'property_category', 'postal_address', 'plot_area', 'Colony', 'signature', 'reason', 'receiver_name', 'property_usage', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'Vendor', 'MC', 'water_bill_consumer_id', 'nonSubmittable', 'old_Tax_d','landmark']
+    selected_columns = ['Date', 'Property_ID', 'distributionPossible', 'owner_name', 'whatsapp_number', 'Mobile', 'Surveyor number', 'property_type', 'property_image', 'receiver_image', 'property_category', 'postal_address', 'plot_area', 'Colony', 'signature', 'reason', 'receiver_name', 'property_usage', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'Vendor', 'MC', 'water_bill_consumer_id', 'nonSubmittable', 'old_Tax_d','landmark']
    
     df_filtered = df[selected_columns]
    
@@ -333,7 +337,7 @@ def select_columns(df):
 
 def select_columns_faridabad(df):
 
-    selected_columns = ['Date', 'Property_ID','sn','distributionPossible','reason', 'owner_name', 'whatsapp_number', 'Mobile', 'Phone','aadhaarNumber', "property_image",'receiver_image', 'Colony', 'signature', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName']
+    selected_columns = ['Date', 'Property_ID','sn','distributionPossible','reason', 'owner_name', 'whatsapp_number', 'Mobile', 'Surveyor number','aadhaarNumber', "property_image",'receiver_image', 'Colony', 'signature', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName']
    
     df_filtered = df[selected_columns]
     df_filtered = df_filtered.sort_values(by='Date')

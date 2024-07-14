@@ -70,7 +70,7 @@ if authentication_status:
 
     fbdf.rename(columns={'vmc_colony_name': 'Colony'}, inplace=True)
     fbdf.rename(columns={'vendor_name': 'Vendor'}, inplace=True)
-    fbdf.rename(columns={'userPhoneNumber': 'Phone'}, inplace=True)
+    fbdf.rename(columns={'userPhoneNumber': 'Surveyor number'}, inplace=True)
     fbdf.rename(columns={'_8_digit_UPID': 'Property_ID'}, inplace=True)
     fbdf.rename(columns={'modifiedAtString':'Date'}, inplace=True)
     fbdf.rename(columns={'mobileNumberOfOwner':'Mobile'}, inplace=True)
@@ -80,6 +80,10 @@ if authentication_status:
     colony_list = st.sidebar.multiselect("Pick the Colony", fbdf["Colony"].unique())
     if colony_list:
         fbdf = fbdf[fbdf["Colony"].isin(colony_list)]
+    user_list = st.sidebar.multiselect("Select Surveyor number", fbdf["Surveyor number"].unique(),default=[])
+
+    if user_list :
+        fbdf = fbdf[fbdf["Surveyor number"].isin(user_list)]
     
     
     # if(username=="master"):

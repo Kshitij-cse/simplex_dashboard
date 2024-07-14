@@ -25,18 +25,19 @@ def historical_analysis_faridabad(df):
     
     df.rename(columns={'district': 'MC'}, inplace=True)
 
-    result4 = generate_grouped_df(df[['Property_ID','Phone', 'Colony']], ['Phone', 'Colony'])
+    result4 = generate_grouped_df(df[['Property_ID','Surveyor number', 'Colony']], ['Surveyor number', 'Colony'])
     result5 = generate_grouped_df(df[['Property_ID', 'Colony']], ['Colony'])
 
     total_properties_covered = df.shape[0]
     col8, col9 = st.columns((2))
     with col8:
-        csv4,pdf_buffer4= gen_csv(result4,(f" {'Phone no wise:'} {total_properties_covered}"))
+        csv4,pdf_buffer4= gen_csv(result4,(f" {'Surveyor no wise:'} {total_properties_covered}"))
         create_download_buttons(pdf_buffer4,csv4,2169,2199)
 
     with col9:
         csv5,pdf_buffer5= gen_csv(result5,'Colonies wise:')
         create_download_buttons(pdf_buffer5,csv5,2170,21100)
     df = select_columns_faridabad(df)
+    
     csv6,pdf_buffer6= gen_csv(df,'Raw Data')
     create_download_buttons(pdf_buffer6,csv6,21705,21706)
