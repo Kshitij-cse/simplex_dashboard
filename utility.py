@@ -1,5 +1,3 @@
-from PIL import Image
-import requests
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
@@ -7,8 +5,7 @@ from io import BytesIO
 import streamlit as st
 import firebase_admin
 from firebase_admin import credentials, firestore
-import os
-from firebase_admin import credentials, storage
+from firebase_admin import credentials
 import pandas as pd
 from google.api_core.retry import Retry
 import smtplib
@@ -17,7 +14,8 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 from datetime import datetime
-from const import cols_to_be_removed,cols_to_be_removed1,cols_to_be_removed2,cols_to_be_removed3
+from const import cols_to_be_removed2,cols_to_be_removed3
+
 def df_to_pdf(df):
     buffer = BytesIO()
 

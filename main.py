@@ -2,19 +2,10 @@ import streamlit as st
 import warnings
 import pandas as pd
 from auth_code import auth_code
-from images_tab import Image_tab
-from today_analysis import today_analysis
-from historicaL_analysis import historical_analysis
-from today_analysis1 import today_analysis1
-from historical_analysis1 import historical_analysis1
-from utility import firebase_data_loader,firebase_data_loader1,firebase_data_loaderfb,firebase_data_loaderfb1,firebase_data_loaderonlyfb,fetch_faridabad_include_submitted
-import streamlit_authenticator as stauth
-from analytics_page import  Analytics_tab
+from utility import firebase_data_loaderfb1,fetch_faridabad_include_submitted
 from today_faridabad import today_analysis_faridabad
 from historical_faridabad import historical_analysis_faridabad
 from images_faridabad import image_faridabad
-import time
-from const import cols_to_be_removed
 st.set_page_config(page_title="Simplex Dashboard", page_icon=":bar_chart:", layout="wide")
 warnings.filterwarnings('ignore')
 
