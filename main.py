@@ -20,41 +20,17 @@ if authentication_status:
     tab_titles = ["Today Faridabad","Historical Faridabad","Faridabad Images"]
     tabs = st.tabs(tab_titles)
     st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
-    
-    # df = firebase_data_loader()
-    # df1 = firebase_data_loader1()
-    # df = pd.merge(df1, df[['vendor_name', '_8_digit_UPID']], on='_8_digit_UPID', how='left')
-    
-    # df["district"] = df["district"].str.lower()
-    # df['modifiedAtString'] = pd.to_datetime(df['modifiedAtString'], unit='ms')
-    
-    # df.rename(columns={'vmc_colony_name': 'Colony'}, inplace=True)
-    # df.rename(columns={'vendor_name': 'Vendor'}, inplace=True)
-    # df.rename(columns={'userPhoneNumber': 'Phone'}, inplace=True)
-    # df.rename(columns={'_8_digit_UPID': 'Property_ID'}, inplace=True)
-    # df.rename(columns={'modifiedAtString':'Date'}, inplace=True)
-    # df.rename(columns={'mobileNumberOfOwner':'Mobile'}, inplace=True)
-     
-    #10 colony data
-    #df1 = firebase_data_loaderfb()
-    #faridabad single node
-    #df1.to_excel('data1.xlsx')
-    #df2 = firebase_data_loaderonlyfb()
-    #df2.to_excel('data2.xlsx')
-   
-    #fbdf = pd.concat([df1, df2], ignore_index=True)
-    #df1,df2 = None,None
 
     df3= firebase_data_loaderfb1()
-    #df3.to_excel("data3.xlsx")
+    if 'df3' not in st.session_state:
+     st.session_state['df1'] = firebase_data_loaderfb1()
+
     df4 = fetch_faridabad_include_submitted()
-   
+    if 'df4' not in st.session_state:
+     st.session_state['df4'] = fetch_faridabad_include_submitted()
+
     fbdf = pd.concat([df3, df4], ignore_index=True)
-
     df3,df4 = None,None
-
-    #fbdf = pd.merge(fbdf1, fbdf[['_8_digit_UPID','image']], on='_8_digit_UPID', how='left')
-    
 
     fbdf['modifiedAtString'] = pd.to_datetime(fbdf['modifiedAtString'], unit='ms')
     fbdf['modifiedAtString'] = fbdf['modifiedAtString'].dt.tz_localize('UTC').dt.tz_convert('Asia/Kolkata')
@@ -98,8 +74,8 @@ if authentication_status:
             today_analysis_faridabad(fbdf)
         with tabs[1]:
             historical_analysis_faridabad(fbdf)
-        with tabs[2]:
-                image_faridabad(fbdf)
+        # with tabs[2]:
+        #         image_faridabad(fbdf)
 #3elif(username=='assandh'):
         # with tabs[0]:
         #     today_analysis1(df)
