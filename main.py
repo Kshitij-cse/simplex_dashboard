@@ -17,7 +17,7 @@ if authentication_status:
 
     st.sidebar.button("Refresh",on_click=clear_cache)
     authenticator.logout("Logout", "sidebar",key=17)
-    tab_titles = ["Today Faridabad","Historical Faridabad","Faridabad Images"]
+    tab_titles = ["Today Faridabad","Historical Faridabad"]
     tabs = st.tabs(tab_titles)
     st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
 

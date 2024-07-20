@@ -39,5 +39,5 @@ def historical_analysis_faridabad(df):
         create_download_buttons(pdf_buffer5,csv5,2170,21100)
     df = select_columns_faridabad(df)
     
-    csv6,pdf_buffer6= gen_csv(df,'Raw Data')
-    create_download_buttons(pdf_buffer6,csv6,21705,21706)
+    # csv6,pdf_buffer6= gen_csv(df,'Raw Data')
+    # create_download_buttons(pdf_buffer6,csv6,21705,21706)
