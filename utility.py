@@ -1,4 +1,6 @@
 from io import BytesIO
+import json
+import os
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from io import BytesIO
@@ -71,10 +73,18 @@ def create_download_buttons(pdf_buffer, csv_data,pdf_key,csv_key):
         st.write('')
 
 def firebase_data_loader5():
-    if not firebase_admin._apps:
-      cred = credentials.Certificate("firebase-credentials.json")
-      firebase_admin.initialize_app(cred)
+    
 
+    firebase_credentials = os.getenv('Firebase_credentials')
+
+    if not firebase_credentials:
+        raise ValueError("No Firebase credentials found in environment variables")
+    if not firebase_admin._apps:
+    
+        service_account_info = json.loads(firebase_credentials)
+        cred = credentials.Certificate(service_account_info)
+        firebase_admin.initialize_app(cred)
+        
     db = firestore.client()
     collection_name = "users" 
     docs = db.collection(collection_name).stream(retry=Retry())
@@ -117,8 +127,14 @@ def firebase_data_loader1():
 ###########################################################
 @st.cache_data
 def firebase_data_loaderfb():
+    firebase_credentials = os.getenv('Firebase_credentials')
+
+    if not firebase_credentials:
+        raise ValueError("No Firebase credentials found in environment variables")
     if not firebase_admin._apps:
-        cred = credentials.Certificate("firebase-credentials.json")
+    
+        service_account_info = json.loads(firebase_credentials)
+        cred = credentials.Certificate(service_account_info)
         firebase_admin.initialize_app(cred)
 
     db = firestore.client()
@@ -140,9 +156,15 @@ def firebase_data_loaderfb():
 
 @st.cache_data
 def firebase_data_loaderonlyfb():
+    firebase_credentials = os.getenv('Firebase_credentials')
+
+    if not firebase_credentials:
+        raise ValueError("No Firebase credentials found in environment variables")
     if not firebase_admin._apps:
-      cred = credentials.Certificate("firebase-credentials.json")
-      firebase_admin.initialize_app(cred)
+    
+        service_account_info = json.loads(firebase_credentials)
+        cred = credentials.Certificate(service_account_info)
+        firebase_admin.initialize_app(cred)
 
     db = firestore.client()
     collection_name = "faridabad" 
@@ -159,9 +181,15 @@ def firebase_data_loaderonlyfb():
 
 @st.cache_data
 def firebase_data_loaderfb1():
+    firebase_credentials = os.getenv('Firebase_credentials')
+
+    if not firebase_credentials:
+        raise ValueError("No Firebase credentials found in environment variables")
     if not firebase_admin._apps:
-      cred = credentials.Certificate("firebase-credentials.json")
-      firebase_admin.initialize_app(cred)
+    
+        service_account_info = json.loads(firebase_credentials)
+        cred = credentials.Certificate(service_account_info)
+        firebase_admin.initialize_app(cred)
 
     db = firestore.client()
     collection_name = "faridabadSubmitted" 
@@ -175,8 +203,14 @@ def firebase_data_loaderfb1():
 
 @st.cache_data
 def fetch_faridabad_include_submitted():
+    firebase_credentials = os.getenv('Firebase_credentials')
+
+    if not firebase_credentials:
+        raise ValueError("No Firebase credentials found in environment variables")
     if not firebase_admin._apps:
-        cred = credentials.Certificate("firebase-credentials.json")
+    
+        service_account_info = json.loads(firebase_credentials)
+        cred = credentials.Certificate(service_account_info)
         firebase_admin.initialize_app(cred)
 
     db = firestore.client()
@@ -197,9 +231,15 @@ def fetch_faridabad_include_submitted():
 #######################################################################3
 @st.cache_data
 def firebase_data_loader2():
+    firebase_credentials = os.getenv('Firebase_credentials')
+
+    if not firebase_credentials:
+        raise ValueError("No Firebase credentials found in environment variables")
     if not firebase_admin._apps:
-      cred = credentials.Certificate("firebase-credentials.json")
-      firebase_admin.initialize_app(cred)
+    
+        service_account_info = json.loads(firebase_credentials)
+        cred = credentials.Certificate(service_account_info)
+        firebase_admin.initialize_app(cred)
 
     db = firestore.client()
     collection_name = "property_remarks" 
