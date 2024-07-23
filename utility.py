@@ -397,6 +397,6 @@ def submit_data(property_id, name, remarks):
         st.success("Data submitted successfully!")
     else:
         st.error("Please fill in all fields.")
-
+#hi
 
         
