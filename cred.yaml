@@ -19,7 +19,7 @@ credentials:
       name: Faridabad
       password: '$2b$12$DNyiC9W2Ersit3F/YTSaduQ3mwtqe.p1UkQ0CcqOxWIJ5.3ZKdkuy' # To be replaced with hashed password  
 cookie:
-  expiry_days: 0
+  expiry_days: 30
   key: 'abcde@123!@' # Must be string
   name: "Simplex Dashboard"
 preauthorized:
