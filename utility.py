@@ -1,14 +1,13 @@
-from PIL import Image
-import requests
 from io import BytesIO
+import json
+import os
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from io import BytesIO
 import streamlit as st
 import firebase_admin
 from firebase_admin import credentials, firestore
-import os
-from firebase_admin import credentials, storage
+from firebase_admin import credentials
 import pandas as pd
 from google.api_core.retry import Retry
 import smtplib
@@ -17,7 +16,8 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 from datetime import datetime
-from const import cols_to_be_removed,cols_to_be_removed1,cols_to_be_removed2,cols_to_be_removed3
+from const import cols_to_be_removed2,cols_to_be_removed3
+
 def df_to_pdf(df):
     buffer = BytesIO()
 
@@ -73,10 +73,18 @@ def create_download_buttons(pdf_buffer, csv_data,pdf_key,csv_key):
         st.write('')
 
 def firebase_data_loader5():
-    if not firebase_admin._apps:
-      cred = credentials.Certificate("firebase-credentials.json")
-      firebase_admin.initialize_app(cred)
+    
 
+    firebase_credentials = os.getenv('Firebase_credentials')
+
+    if not firebase_credentials:
+        raise ValueError("No Firebase credentials found in environment variables")
+    if not firebase_admin._apps:
+    
+        service_account_info = json.loads(firebase_credentials)
+        cred = credentials.Certificate(service_account_info)
+        firebase_admin.initialize_app(cred)
+        
     db = firestore.client()
     collection_name = "users" 
     docs = db.collection(collection_name).stream(retry=Retry())
@@ -119,8 +127,14 @@ def firebase_data_loader1():
 ###########################################################
 @st.cache_data
 def firebase_data_loaderfb():
+    firebase_credentials = os.getenv('Firebase_credentials')
+
+    if not firebase_credentials:
+        raise ValueError("No Firebase credentials found in environment variables")
     if not firebase_admin._apps:
-        cred = credentials.Certificate("firebase-credentials.json")
+    
+        service_account_info = json.loads(firebase_credentials)
+        cred = credentials.Certificate(service_account_info)
         firebase_admin.initialize_app(cred)
 
     db = firestore.client()
@@ -142,9 +156,15 @@ def firebase_data_loaderfb():
 
 @st.cache_data
 def firebase_data_loaderonlyfb():
+    firebase_credentials = os.getenv('Firebase_credentials')
+
+    if not firebase_credentials:
+        raise ValueError("No Firebase credentials found in environment variables")
     if not firebase_admin._apps:
-      cred = credentials.Certificate("firebase-credentials.json")
-      firebase_admin.initialize_app(cred)
+    
+        service_account_info = json.loads(firebase_credentials)
+        cred = credentials.Certificate(service_account_info)
+        firebase_admin.initialize_app(cred)
 
     db = firestore.client()
     collection_name = "faridabad" 
@@ -161,9 +181,15 @@ def firebase_data_loaderonlyfb():
 
 @st.cache_data
 def firebase_data_loaderfb1():
+    firebase_credentials = os.getenv('Firebase_credentials')
+
+    if not firebase_credentials:
+        raise ValueError("No Firebase credentials found in environment variables")
     if not firebase_admin._apps:
-      cred = credentials.Certificate("firebase-credentials.json")
-      firebase_admin.initialize_app(cred)
+    
+        service_account_info = json.loads(firebase_credentials)
+        cred = credentials.Certificate(service_account_info)
+        firebase_admin.initialize_app(cred)
 
     db = firestore.client()
     collection_name = "faridabadSubmitted" 
@@ -177,8 +203,14 @@ def firebase_data_loaderfb1():
 
 @st.cache_data
 def fetch_faridabad_include_submitted():
+    firebase_credentials = os.getenv('Firebase_credentials')
+
+    if not firebase_credentials:
+        raise ValueError("No Firebase credentials found in environment variables")
     if not firebase_admin._apps:
-        cred = credentials.Certificate("firebase-credentials.json")
+    
+        service_account_info = json.loads(firebase_credentials)
+        cred = credentials.Certificate(service_account_info)
         firebase_admin.initialize_app(cred)
 
     db = firestore.client()
@@ -199,9 +231,15 @@ def fetch_faridabad_include_submitted():
 #######################################################################3
 @st.cache_data
 def firebase_data_loader2():
+    firebase_credentials = os.getenv('Firebase_credentials')
+
+    if not firebase_credentials:
+        raise ValueError("No Firebase credentials found in environment variables")
     if not firebase_admin._apps:
-      cred = credentials.Certificate("firebase-credentials.json")
-      firebase_admin.initialize_app(cred)
+    
+        service_account_info = json.loads(firebase_credentials)
+        cred = credentials.Certificate(service_account_info)
+        firebase_admin.initialize_app(cred)
 
     db = firestore.client()
     collection_name = "property_remarks" 
@@ -327,7 +365,7 @@ def send_email( receiver_emails,dataframe):
 
 def select_columns(df):
 
-    selected_columns = ['Date', 'Property_ID', 'distributionPossible', 'owner_name', 'whatsapp_number', 'Mobile', 'Surveyor number', 'property_type', 'property_image', 'receiver_image', 'property_category', 'postal_address', 'plot_area', 'Colony', 'signature', 'reason', 'receiver_name', 'property_usage', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area','old_Tax_d', 'Vendor', 'MC', 'water_bill_consumer_id', 'nonSubmittable', 'old_Tax_d','landmark']
+    selected_columns = ['Date', 'Property_ID', 'distributionPossible', 'owner_name', 'whatsapp_number', 'Mobile', 'Surveyor number', 'property_type', 'property_image', 'receiver_image', 'property_category', 'postal_address', 'plot_area', 'Colony', 'signature', 'reason', 'receiver_name', 'property_usage', 'latitude', 'longitude', 'ownerFatherOrHusbandName', 'total_carpet_area', 'Vendor', 'MC', 'water_bill_consumer_id', 'nonSubmittable', 'old_Tax_d','landmark']
    
     df_filtered = df[selected_columns]
    
@@ -337,7 +375,7 @@ def select_columns(df):
 
 def select_columns_faridabad(df):
 
-    selected_columns = ['Date', 'Property_ID','sn','distributionPossible','reason', 'owner_name', 'whatsapp_number', 'Mobile', 'Surveyor number','aadhaarNumber', "property_image",'receiver_image', 'Colony', 'signature', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName']
+    selected_columns = ['Date', 'Property_ID','sn','distributionPossible','reason', 'owner_name', 'whatsapp_number', 'Mobile', 'Surveyor number','aadhaarNumber',"old_Tax_d", "property_image",'receiver_image', 'Colony', 'signature', 'receiver_name', 'latitude', 'longitude', 'ownerFatherOrHusbandName']
    
     df_filtered = df[selected_columns]
     df_filtered = df_filtered.sort_values(by='Date')
@@ -359,6 +397,7 @@ def submit_data(property_id, name, remarks):
         st.success("Data submitted successfully!")
     else:
         st.error("Please fill in all fields.")
-
+#hi
+#hello
 
         
