@@ -1,25 +1,25 @@
 credentials:
   usernames:
-    Master:
-      name: Master
-      password: '$2b$12$q033REViOEUFX.kjCMX1aepkm8DYSuAP74LSqHTkcU9poyIVjbxlu' # To be replaced with hashed password
-    ambala:
-      name: Ambala
-      password: '$2b$12$fKlgdnYedU7VrJq5RE39yORx79aP4eK8C6qE9QZMME/a5dLWM6TGe' # To be replaced with hashed password
-    gurgaon:
-      name: Gurgaon
-      password: '$2b$12$bKW8qkNO6xxIkLg2s9h3/erKD9AQB0O1jMD62TSezYl9Sh2WM0C3.' # To be replaced with hashed password
-    karnal:
-      name: Karnal
-      password: '$2b$12$yQ402kd3iszFi72gRi2Z4OPfGY6abM2TlWTYXZy9TukF3dYj/VIwi' # To be replaced with hashed password
-    Assandh:
-      name: Assandh
-      password: '$2b$12$mh9GI9tKSGrD/Skh9pHztu.P5fMC.c8de7b7hYeU/xSS8XoLelI7K' # To be replaced with hashed password
+    # Master:
+    #   name: Master
+    #   password: '$2b$12$q033REViOEUFX.kjCMX1aepkm8DYSuAP74LSqHTkcU9poyIVjbxlu' # To be replaced with hashed password
+    # ambala:
+    #   name: Ambala
+    #   password: '$2b$12$fKlgdnYedU7VrJq5RE39yORx79aP4eK8C6qE9QZMME/a5dLWM6TGe' # To be replaced with hashed password
+    # gurgaon:
+    #   name: Gurgaon
+    #   password: '$2b$12$bKW8qkNO6xxIkLg2s9h3/erKD9AQB0O1jMD62TSezYl9Sh2WM0C3.' # To be replaced with hashed password
+    # karnal:
+    #   name: Karnal
+    #   password: '$2b$12$yQ402kd3iszFi72gRi2Z4OPfGY6abM2TlWTYXZy9TukF3dYj/VIwi' # To be replaced with hashed password
+    # Assandh:
+    #   name: Assandh
+    #   password: '$2b$12$mh9GI9tKSGrD/Skh9pHztu.P5fMC.c8de7b7hYeU/xSS8XoLelI7K' # To be replaced with hashed password
     Faridabad:
       name: Faridabad
-      password: '$2b$12$0ao34dJx5XzCYZBhs6Ud3On2Zw3Jy4fGti1XcjD9I2f7r6X/qRFJy' # To be replaced with hashed password  
+      password: '$2b$12$DNyiC9W2Ersit3F/YTSaduQ3mwtqe.p1UkQ0CcqOxWIJ5.3ZKdkuy' # To be replaced with hashed password  
 cookie:
-  expiry_days: 30
+  expiry_days: 0
   key: 'abcde@123!@' # Must be string
   name: "Simplex Dashboard"
 preauthorized:
