@@ -41,3 +41,9 @@ def historical_analysis_faridabad(df):
     
     # csv6,pdf_buffer6= gen_csv(df,'Raw Data')
     # create_download_buttons(pdf_buffer6,csv6,21705,21706)
+    def csv_raw(df):
+        return df.to_csv(index=False).encode('utf-8')
+    
+    csv_raw = csv_raw(df)
+    st.download_button(label="Download Raw Data", data=csv_raw, file_name="Property.csv",
+                           mime="text/csv", key=6041)
