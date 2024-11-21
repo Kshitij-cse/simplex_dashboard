@@ -195,8 +195,13 @@ def firebase_data_loaderfb1():
     collection_name = "faridabadSubmitted" 
     docs = db.collection(collection_name).stream(retry=Retry())
     data_list = []
+    count = 0
+    max_rows = 100 
     for doc in docs:
-        data_list.append(doc.to_dict())
+         if count >= max_rows:  # Stop after 100 rows
+            break
+         data_list.append(doc.to_dict())
+         count += 1
     df = pd.DataFrame(data_list)
     df.drop(columns=cols_to_be_removed2,inplace=True)
     return df
@@ -222,9 +227,12 @@ def fetch_faridabad_include_submitted():
         collection_name = collection.id
         if collection_name.startswith("faridabad_") and "Submitted" in collection_name:
             docs = db.collection(collection_name).stream(retry=Retry())
+            
             for doc in docs:
+                if count >= max_rows:  # Stop after 100 rows
+                   break
                 data_list.append(doc.to_dict())
-
+                count += 1
     df = pd.DataFrame(data_list)
     df.drop(columns=cols_to_be_removed3,inplace=True)
     return df
